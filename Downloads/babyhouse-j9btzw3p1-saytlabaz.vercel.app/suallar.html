@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="az" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="theme-color" content="#F8FAFC">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <title>Suallar - BabyHouse</title>
+    <link rel="icon" type="image/png" href="BabyHouse.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kidora-pink': '#FF6B9C',
+                        'kidora-blue': '#4DA3FF',
+                        'kidora-yellow': '#FFB800',
+                        'kidora-green': '#00C896',
+                        'kidora-purple': '#9D73F9',
+                        'kidora-dark': '#1C1642',
+                        'kidora-bg': '#FAFAFA'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* --- Heavy/Slow Cinematic Reveal Animations (Blur to Clear) --- */
+        .js-reveal [data-reveal] {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+            transition: opacity 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000), 
+                        transform 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(-50px, 0, 0);
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(50px, 0, 0);
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(0, 20px, 0) scale3d(0.95, 0.95, 1);
+        }
+        .js-reveal [data-reveal].is-revealed {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+    </style>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        html, body {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: none;
+        }
+        img {
+            -webkit-user-drag: none;
+        }
+    </style>
+    
+    <style>
+        [data-aos="blur-in"] {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(20px);
+            transition-property: transform, opacity, filter;
+            will-change: transform, opacity, filter;
+        }
+        [data-aos="blur-in"].aos-animate {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+    </style>
+    </head>
+<body class="bg-kidora-bg text-gray-800 font-sans antialiased selection:bg-kidora-pink selection:text-white">
+
+    <!-- Header -->
+    <header class="bg-white/90 backdrop-blur-md fixed w-full top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-14 md:h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="BabyHouse.png" alt="BabyHouse" class="w-8 h-8 md:w-14 md:h-14 object-contain" loading="lazy" decoding="async">
+                <span class="font-display font-bold tracking-tight text-kidora-dark text-xl md:text-2xl">BabyHouse</span>
+            </a>
+            <a href="index.html" class="font-bold text-kidora-dark hover:text-kidora-blue transition-colors text-sm md:text-base">
+                <i class="fas fa-arrow-left mr-2"></i> Ana Səhifəyə Qayıt
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-16 px-5 md:px-6 min-h-screen">
+        <div class="max-w-4xl mx-auto">
+            
+            <div data-aos="blur-in" class="text-center mb-4 md:mb-8 md:mb-16">
+                <h2 data-aos="blur-in" class="text-kidora-blue font-bold tracking-widest uppercase mb-3 text-sm md:text-base">Məlumat Mərkəzi</h2>
+                <h1 data-aos="blur-in" class="font-display font-bold text-kidora-dark mb-4 text-xl md:text-5xl">Tez-tez Verilən Suallar</h1>
+                <p data-aos="blur-in" class="text-gray-600 font-medium max-w-2xl mx-auto text-xl">Sizi maraqlandıran bütün sualların cavabları burada.</p>
+            </div>
+
+            <!-- FAQ List -->
+            <div class="space-y-4">
+                
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Bağçanızın iş saatları necədir?</span>
+                        <i class="fas fa-chevron-down text-kidora-blue transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">Bağçamız həftə içi 5 gün, səhər saat 08:00-dan axşam 19:00-dək fəaliyyət göstərir. İstirahət və bayram günləri qeyri-iş günləridir. Lakin daya xidmətimiz vasitəsilə həftəsonları da müraciət edə bilərsiniz.</div>
+                    </div>
+                </div>
+
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Qidalanma necə təşkil olunur?</span>
+                        <i class="fas fa-chevron-down text-kidora-pink transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">Uşaqlar gündə 5 dəfə (səhər, ikinci səhər, nahar, ikindi, axşam) təbii və sağlam məhsullardan ibarət xüsusi pediatr təsdiqli menyu ilə qidalanırlar.</div>
+                    </div>
+                </div>
+
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Hansı dərnəklər fəaliyyət göstərir?</span>
+                        <i class="fas fa-chevron-down text-kidora-yellow transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">Strateji şahmat, rəqs, musiqi və yaradıcı rəsm dərnəklərimiz var. Hər biri peşəkar müəllimlər tərəfindən uşaqların fiziki və zehni inkişafı nəzərə alınaraq tədris olunur.</div>
+                    </div>
+                </div>
+
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Uşaqların təhlükəsizliyi necə təmin edilir?</span>
+                        <i class="fas fa-chevron-down text-kidora-green transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">Bağçamızda 24/7 rejimdə işləyən yüksək keyfiyyətli (Hikvision) kamera müşahidə sistemi mövcuddur. Uşaqlarımız hər zaman nəzarətdədir.</div>
+                    </div>
+                </div>
+
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Xarici dillər tədris olunurmu?</span>
+                        <i class="fas fa-chevron-down text-kidora-purple transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">Bəli, Azərbaycan bölməsi ilə yanaşı Rus və İngilis dilli bölmələrimiz fəaliyyət göstərir. Həmçinin bütün qruplarda xarici dil dərsləri var.</div>
+                    </div>
+                </div>
+
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Psixoloq və loqoped xidməti varmı?</span>
+                        <i class="fas fa-chevron-down text-kidora-blue transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">Peşəkar loqoped, defektoloq və psixoloq xidmətimiz mövcuddur. Xüsusi qayğıya ehtiyacı olan övladlarımız üçün mütəxəssislərimiz tərəfindən ayrıca individual inkişaf və korreksiya xidməti göstərilir.</div>
+                    </div>
+                </div>
+
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Daya xidməti nədən ibarətdir?</span>
+                        <i class="fas fa-chevron-down text-kidora-pink transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">İş saatlarından kənar, həftəsonları və ya xüsusi tədbirləriniz zamanı övladınızı tam könül rahatlığı ilə bizə əmanət edə biləcəyiniz saatlıq və günlük peşəkar qulluq xidmətidir.</div>
+                    </div>
+                </div>
+
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Dövlət dəstəyi ilə qəbul necədir?</span>
+                        <i class="fas fa-chevron-down text-kidora-yellow transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">2026–2027-ci tədris ili üçün uşaqların dövlət dəstəyi ilə bağçaya qəbulu davam edir. Bağçanın aylıq ödənişi 500 AZN olduğu halda, dövlət dəstəyi ilə valideyn cəmi 150 AZN ödəyir. Qeydiyyat myGov vasitəsilə aparılır.</div>
+                    </div>
+                </div>
+                
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Hansı yaş qrupları qəbul edilir?</span>
+                        <i class="fas fa-chevron-down text-kidora-green transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">Bağçamıza 1 yaşından 6 yaşına qədər olan uşaqlar qəbul olunur və yaş xüsusiyyətlərinə uyğun olaraq müvafiq qruplara bölünürlər.</div>
+                    </div>
+                </div>
+                
+                <div data-aos="blur-in" class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl">
+                        <span>Qeydiyyat üçün lisenziya adı nədir?</span>
+                        <i class="fas fa-chevron-down text-kidora-purple transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">Biz qrant müsabiqəsinin qalibiyik. myGov üzərindən qeydiyyat zamanı lisenziya adı olaraq "Beybi Hauz" çıxacaq.</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ once: false, duration: 1000, offset: 120, easing: 'ease-out-cubic', mirror: true });</script>
+</body>
+</html>

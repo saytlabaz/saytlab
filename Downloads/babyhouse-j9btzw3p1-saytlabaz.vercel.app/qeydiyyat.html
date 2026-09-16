@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="az" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="theme-color" content="#F8FAFC">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <title>Qeydiyyat - BabyHouse</title>
+    <link rel="icon" type="image/png" href="BabyHouse.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'kidora-pink': '#FF6B9C',
+                        'kidora-blue': '#4DA3FF',
+                        'kidora-yellow': '#FFB800',
+                        'kidora-green': '#00C896',
+                        'kidora-purple': '#9D73F9',
+                        'kidora-dark': '#1C1642',
+                        'kidora-bg': '#FAFAFA'
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- Heavy/Slow Cinematic Reveal Animations (Blur to Clear) --- */
+        .js-reveal [data-reveal] {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+            transition: opacity 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000), 
+                        transform 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(-50px, 0, 0);
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(50px, 0, 0);
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(0, 20px, 0) scale3d(0.95, 0.95, 1);
+        }
+        .js-reveal [data-reveal].is-revealed {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        /* --- Magnetic & Tilt Utilities --- */
+        [data-magnetic] {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .tilt-card {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+    </style>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        html, body {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: none;
+        }
+        img {
+            -webkit-user-drag: none;
+        }
+    </style>
+    
+    <style>
+        [data-aos="blur-in"] {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(20px);
+            transition-property: transform, opacity, filter;
+            will-change: transform, opacity, filter;
+        }
+        [data-aos="blur-in"].aos-animate {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+    </style>
+    </head>
+<body class="bg-kidora-bg text-gray-800 font-sans antialiased overflow-x-hidden selection:bg-kidora-pink selection:text-white">
+
+    <!-- Header (Simple) -->
+    <header class="bg-white/90 backdrop-blur-md fixed w-full top-0 z-50 border-b border-gray-100 shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 h-14 md:h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="BabyHouse.png" alt="BabyHouse" class="w-8 h-8 md:w-14 md:h-14 object-contain" loading="lazy" decoding="async">
+                <span class="font-display font-bold tracking-tight text-kidora-dark text-xl md:text-2xl">BabyHouse</span>
+            </a>
+            <a href="index.html" class="font-bold text-kidora-dark hover:text-kidora-blue transition-colors text-sm md:text-base">
+                <i class="fas fa-arrow-left mr-2"></i> Ana Səhifəyə Qayıt
+            </a>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-16 px-5 md:px-6 min-h-screen">
+        <div class="max-w-5xl mx-auto">
+            
+            <div data-aos="blur-in" class="text-center mb-4 md:mb-8 md:mb-16">
+                <h1 data-aos="blur-in" class="font-display font-bold text-kidora-blue mb-4 text-xl md:text-5xl">QEYDİYYAT NECƏ APARILIR?</h1>
+                <div class="inline-flex items-center gap-2 bg-kidora-yellow text-kidora-dark px-6 py-2 rounded-full font-bold uppercase tracking-widest mb-6 shadow-md rotate-[-2deg] text-sm">
+                    <i class="fas fa-list-ol"></i> Addım-addım bələdçi
+                </div>
+                <p data-aos="blur-in" class="text-gray-600 font-medium max-w-3xl mx-auto leading-relaxed text-xl">
+                    "Valideyn-dövlət-özəl tərəfdaşlıq" layihəsi üzrə qeydiyyat <strong class="text-kidora-dark font-display text-lg md:text-2xl">myGov</strong> vasitəsilə həyata keçirilir.
+                </p>
+            </div>
+
+            <!-- Warning Boxes -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:p-6 mb-4 md:mb-8 md:mb-16">
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 md:p-6 rounded-r-2xl flex gap-4 md:p-6 items-start shadow-sm">
+                    <i class="fas fa-desktop mt-1 text-red-500 md:text-4xl"></i>
+                    <div>
+                        <h3 data-aos="blur-in" class="font-bold mb-2 text-xl">DİQQƏT!</h3>
+                        <p data-aos="blur-in" class="text-gray-700 font-medium leading-relaxed">
+                            Qeydiyyat <strong class="text-kidora-dark">yalnız kompüter</strong> vasitəsilə myGov səhifəsinə daxil olmaqla mümkün olacaq.
+                        </p>
+                    </div>
+                </div>
+                <div class="bg-orange-50 border-l-4 border-orange-500 p-4 md:p-6 rounded-r-2xl flex gap-4 md:p-6 items-start shadow-sm">
+                    <i class="fas fa-mobile-alt mt-1 text-orange-500 md:text-4xl"></i>
+                    <div>
+                        <h3 data-aos="blur-in" class="font-bold mb-2 text-xl">Telefondan Olmaz!</h3>
+                        <p data-aos="blur-in" class="text-gray-700 font-medium leading-relaxed">
+                            Telefondan myGov tətbiqi vasitəsilə qeydiyyatdan keçmək <strong class="text-red-500">olmayacaq</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Steps Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:p-6 mb-4 md:mb-8 md:mb-16 relative">
+                
+                <!-- Step 1 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-kidora-blue text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">1</div>
+                    <i class="fas fa-globe text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">myGov səhifəsinə daxil olun</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-kidora-green text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">2</div>
+                    <i class="fas fa-list text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">"Xidmətlər" bölməsini seçin</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-kidora-purple text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">3</div>
+                    <i class="fas fa-th-large text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">"Sahələr" bölməsini seçin</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-kidora-yellow text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">4</div>
+                    <i class="fas fa-graduation-cap text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">"Təhsil" sahəsini seçin</p>
+                </div>
+
+                <!-- Step 5 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-kidora-pink text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">5</div>
+                    <i class="fas fa-file-alt text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">"Məktəbəqədər təhsil müəssisələrinə..." seçin</p>
+                </div>
+
+                <!-- Step 6 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-teal-500 text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">6</div>
+                    <i class="fas fa-mouse-pointer text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">"Müraciət et" seçin</p>
+                </div>
+
+                <!-- Step 7 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-yellow-500 text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">7</div>
+                    <i class="fas fa-clipboard-list text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">"Növbəyə yazıl" seçin</p>
+                </div>
+
+                <!-- Step 8 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">8</div>
+                    <i class="fas fa-language text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">Təlim dilini seçin</p>
+                </div>
+
+                <!-- Step 9 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-green-500 text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">9</div>
+                    <i class="fas fa-map-marker-alt text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">Rayon, şəhər seçin</p>
+                </div>
+
+                <!-- Step 10 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">10</div>
+                    <i class="fas fa-school text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">Təhsil müəssisəsinin növünü seçin</p>
+                </div>
+
+                <!-- Step 11 -->
+                <div data-aos="blur-in" class="bg-white rounded-2xl p-4 md:p-6 shadow-sm border border-gray-100 text-center relative hover:shadow-md transition-shadow group">
+                    <div class="w-10 h-10 bg-kidora-pink text-white rounded-full flex items-center justify-center font-bold absolute -top-5 -left-3 shadow-lg group-hover:scale-110 transition-transform text-xl">11</div>
+                    <i class="fas fa-check-circle text-kidora-dark mb-4 mt-2 text-lg md:text-4xl"></i>
+                    <p data-aos="blur-in" class="font-bold text-gray-800 text-sm">"Davam et" seçin</p>
+                </div>
+
+            </div>
+
+            <!-- Additional Info -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:p-6">
+                <a href="https://my.gov.az" target="_blank" class="bg-blue-50 border border-blue-200 p-4 md:p-6 rounded-2xl flex items-center justify-between hover:bg-blue-100 transition-colors group shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center text-kidora-blue shadow-sm text-lg md:text-2xl">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div>
+                            <p data-aos="blur-in" class="font-bold text-kidora-dark mb-1 text-lg">myGov-a daxil olun</p>
+                            <p data-aos="blur-in" class="text-gray-600 text-sm">Qeydiyyata başlamaq üçün</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-400 group-hover:text-kidora-blue transition-colors group-hover:translate-x-2 transform"></i>
+                </a>
+
+                <a href="https://edu.gov.az/az/news-and-updates/23294-1" target="_blank" class="bg-blue-50 border border-blue-200 p-4 md:p-6 rounded-2xl flex items-center justify-between hover:bg-blue-100 transition-colors group shadow-sm">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 md:w-14 md:h-14 bg-white rounded-full flex items-center justify-center text-kidora-blue shadow-sm text-lg md:text-2xl">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div>
+                            <p data-aos="blur-in" class="font-bold text-kidora-dark mb-1 text-lg">Ətraflı məlumat üçün</p>
+                            <p data-aos="blur-in" class="text-gray-600 text-sm">Rəsmi qaydalar və izah</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-arrow-right text-gray-400 group-hover:text-kidora-blue transition-colors group-hover:translate-x-2 transform"></i>
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ once: false, duration: 1000, offset: 120, easing: 'ease-out-cubic', mirror: true });</script>
+</body>
+</html>

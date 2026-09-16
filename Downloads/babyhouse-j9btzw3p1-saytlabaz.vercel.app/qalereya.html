@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="az" >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="theme-color" content="#F8FAFC">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <title>Qalereya - BabyHouse</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Poppins', 'sans-serif'] },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* --- Heavy/Slow Cinematic Reveal Animations (Blur to Clear) --- */
+        .js-reveal [data-reveal] {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+            transition: opacity 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000), 
+                        transform 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(-50px, 0, 0);
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(50px, 0, 0);
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(0, 20px, 0) scale3d(0.95, 0.95, 1);
+        }
+        .js-reveal [data-reveal].is-revealed {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        /* --- Magnetic & Tilt Utilities --- */
+        [data-magnetic] {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .tilt-card {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+    </style>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        html, body {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: none;
+        }
+        img {
+            -webkit-user-drag: none;
+        }
+    </style>
+    
+    <style>
+        [data-aos="blur-in"] {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(20px);
+            transition-property: transform, opacity, filter;
+            will-change: transform, opacity, filter;
+        }
+        [data-aos="blur-in"].aos-animate {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+    </style>
+    </head>
+<body class="bg-[#F8FAFC] text-gray-800 flex items-center justify-center min-h-screen">
+    <div class="text-center">
+        <h1 data-aos="blur-in" class="font-display font-bold mb-4 text-lg md:text-4xl">Qalereya Səhifəsi</h1>
+        <p data-aos="blur-in" class="mb-4 md:mb-8">Tezliklə bura qalereya şəkilləri əlavə olunacaq.</p>
+        <a href="index.html" class="text-blue-500 underline">Ana Səhifəyə Qayıt</a>
+    </div>
+    <script src="app.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ once: false, duration: 1000, offset: 120, easing: 'ease-out-cubic', mirror: true });</script>
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="az"  >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="theme-color" content="#F8FAFC">
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="dns-prefetch" href="https://images.unsplash.com">
+    <title>BabyHouse</title>
+    <link rel="icon" type="image/png" href="BabyHouse.png">
+    
+    <!-- Google Fonts: Poppins for headings, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        kidora: {
+                            blue: '#4E9AF1',
+                            yellow: '#FFC837',
+                            pink: '#EF476F',
+                            green: '#06D6A0',
+                            purple: '#9D4EDD',
+                            dark: '#1E293B',
+                            bg: '#F8FAFC',
+                            card: '#FFFFFF'
+                        }
+                    },
+                    animation: {
+                        'marquee': 'marquee 30s linear infinite',
+                        'float': 'float 4s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            background-color: #F8FAFC;
+            color: #1E293B;
+            text-rendering: optimizeLegibility;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .blob-shape {
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .card-shadow {
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+        }
+
+        /* --- Heavy/Slow Cinematic Reveal Animations (Blur to Clear) --- */
+        .js-reveal [data-reveal] {
+            opacity: 0;
+            transform: translate3d(0, 40px, 0);
+            transition: opacity 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000), 
+                        transform 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+            will-change: opacity, transform;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            -webkit-transform-style: preserve-3d;
+            transform-style: preserve-3d;
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(-50px, 0, 0);
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(50px, 0, 0);
+        }
+        .js-reveal [data-aos="blur-in"] {
+            transform: translate3d(0, 20px, 0) scale3d(0.95, 0.95, 1);
+        }
+        .js-reveal [data-reveal].is-revealed {
+            opacity: 1;
+            transform: translate3d(0, 0, 0) scale(1);
+        }
+
+        /* --- Magnetic & Tilt Utilities --- */
+        [data-magnetic] {
+            display: inline-block;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .tilt-card {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        /* --- Mobile Menu --- */
+        #mobileMenu {
+            visibility: hidden;
+            opacity: 0;
+            transform: translateY(-20px) scale(0.95);
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.3s;
+            pointer-events: none;
+            display: flex; /* keep it flex so children layout correctly before appearing */
+        }
+        #mobileMenu.is-open {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        /* --- IG Overlay --- */
+        .ig-overlay {
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        .ig-card:hover .ig-overlay {
+            opacity: 1;
+        }
+        /* --- Preloader --- */
+        #preloader {
+            transition: transform 0.8s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.8s ease;
+        }
+
+        /* --- Custom Cursor --- */
+        html.cursor-custom, html.cursor-custom * { cursor: none !important; }
+        .cursor-dot, .cursor-ring {
+            position: fixed;
+            top: 0; left: 0;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity .25s ease, width .2s ease, height .2s ease, background-color .2s ease, border-color .2s ease;
+            will-change: transform;
+        }
+        .cursor-custom .cursor-dot, .cursor-custom .cursor-ring { opacity: 1; }
+        .cursor-dot {
+            width: 7px; height: 7px;
+            background: #EF476F;
+        }
+        .cursor-ring {
+            width: 30px; height: 30px;
+            border: 1.5px solid rgba(239, 71, 111, 0.5);
+            background: rgba(239, 71, 111, 0.04);
+        }
+        .cursor-custom.cursor-hot .cursor-ring {
+            width: 46px; height: 46px;
+            border-color: #FFC837;
+            background: rgba(255, 200, 55, 0.10);
+            box-shadow: 0 0 12px 2px rgba(255, 200, 55, 0.4);
+        }
+        .cursor-custom.cursor-hot .cursor-dot { background: #FFC837; }
+        .cursor-custom.cursor-hidden .cursor-dot,
+        .cursor-custom.cursor-hidden .cursor-ring { opacity: 0; }
+        @media (prefers-reduced-motion: reduce) {
+            html.cursor-custom, html.cursor-custom * { cursor: auto !important; }
+            .cursor-dot, .cursor-ring { display: none !important; }
+        }
+
+    </style>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        html, body {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: none;
+        }
+        img {
+            -webkit-user-drag: none;
+        }
+    </style>
+    
+    <style>
+        [data-aos="blur-in"] {
+            opacity: 0;
+            filter: blur(10px);
+            transform: translateY(20px);
+            transition-property: transform, opacity, filter;
+            will-change: transform, opacity, filter;
+        }
+        [data-aos="blur-in"].aos-animate {
+            opacity: 1;
+            filter: blur(0);
+            transform: translateY(0);
+        }
+    </style>
+    </head>
+<div class="cursor-dot"></div>
+    <div class="cursor-ring"></div>
+
+<body id="top" class="antialiased overflow-x-hidden relative selection:bg-kidora-yellow selection:text-kidora-dark text-lg">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 py-2 md:py-4 px-3 md:px-12" id="navbar">
+        <div class="max-w-7xl mx-auto bg-white/90 backdrop-blur-lg rounded-full shadow-sm border border-gray-100 px-6 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#top" class="flex items-center gap-3">
+                <img src="BabyHouse.png" alt="BabyHouse Logo" class="h-10 md:h-12 w-auto object-contain" loading="lazy" decoding="async">
+                <div class="flex flex-col">
+                    <span class="font-display font-bold tracking-tight text-kidora-dark leading-none text-xl md:text-2xl">BabyHouse</span>
+                    
+                </div>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center space-x-8 font-bold text-gray-600 text-base">
+                <a href="#top" class="hover:text-kidora-pink transition-colors">Ana Səhifə</a>
+                <a href="#haqqimizda" class="hover:text-kidora-blue transition-colors">Haqqımızda</a>
+                <a href="#bolmeler" class="hover:text-kidora-purple transition-colors">Bölmələr</a>
+                <a href="#dernekler" class="hover:text-kidora-green transition-colors">Dərnəklər</a>
+                <a href="#qalereya" class="hover:text-pink-500 transition-colors">Qalereya</a>
+            </div>
+            
+            <!-- CTA Button & IG -->
+            <div class="hidden lg:flex items-center gap-4">
+                
+                <a href="https://wa.me/994553776710?text=Salam,%20ba%C4%9F%C3%A7a%20il%C9%99%20ba%C4%9Fl%C4%B1%20m%C9%99lumat%20almaq%20ist%C9%99yirdim." target="_blank" class="bg-kidora-dark text-white px-7 py-3 data-magnetic rounded-full font-bold hover:bg-gray-800 transition-all transform hover:scale-105 tilt-card shadow-md uppercase tracking-wide text-sm">
+                    Bizimlə Əlaqə
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="lg:hidden text-kidora-dark focus:outline-none" id="mobileMenuToggle" aria-expanded="false" data-magnetic>
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown -->
+        <div class="absolute top-24 left-6 right-6 bg-white rounded-3xl shadow-xl border border-gray-100 p-4 md:p-6 flex flex-col gap-4 font-bold z-50 text-base" id="mobileMenu">
+            <a href="#top" class="text-kidora-dark hover:text-kidora-pink p-2 rounded-lg hover:bg-gray-50">Ana Səhifə</a>
+            <a href="#haqqimizda" class="text-kidora-dark hover:text-kidora-blue p-2 rounded-lg hover:bg-gray-50">Haqqımızda</a>
+            <a href="#bolmeler" class="text-kidora-dark hover:text-kidora-purple p-2 rounded-lg hover:bg-gray-50">Bölmələr</a>
+            <a href="#dernekler" class="text-kidora-dark hover:text-kidora-green p-2 rounded-lg hover:bg-gray-50">Dərnəklər</a>
+            <a href="#qalereya" class="text-kidora-dark hover:text-pink-500 p-2 rounded-lg hover:bg-gray-50">Qalereya</a>
+            <hr class="my-2 border-gray-100">
+            <a href="https://www.instagram.com/babyhouse_az?stkn=MTB6b2cxYWJzYTdpYQ%3D%3D&utm_source=qr" target="_blank" class="flex items-center gap-2 text-pink-500 p-2">
+                <i class="fab fa-instagram text-lg md:text-2xl"></i> Instagram-da bizi izlə
+            </a>
+            <a href="#elaqe" class="bg-kidora-pink text-white text-center px-6 py-4 rounded-full mt-2 shadow-md">Bizimlə Əlaqə</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-28 pb-16 md:pt-40 md:pb-28 px-6 overflow-hidden">
+        <!-- Decorative blobs -->
+        <div class="absolute top-20 -left-20 w-96 h-96 bg-kidora-yellow/20 rounded-full opacity-50 opacity-70 animate-blob"></div>
+        <div class="absolute top-40 -right-20 w-96 h-96 bg-kidora-pink/20 rounded-full opacity-50 opacity-70 animate-blob" style="animation-delay: 2s;"></div>
+        <div class="absolute -bottom-8 left-1/3 w-96 h-96 bg-kidora-blue/20 rounded-full opacity-50 opacity-70 animate-blob" style="animation-delay: 4s;"></div>
+
+        <div class="max-w-7xl mx-auto relative flex flex-col lg:flex-row items-center gap-3 md:gap-6 md:gap-12 lg:gap-20">
+            
+            <!-- Text Content -->
+            <div class="flex-1 text-center lg:text-left z-10">
+                <div data-aos="fade-down" class="inline-block bg-white px-5 py-2 rounded-full text-kidora-blue font-bold mb-6 border border-kidora-blue/20 shadow-sm uppercase tracking-wider animate-float text-sm">
+                    🏆 2011-ci ildən Lisenziyalı
+                </div>
+                <h1 data-aos="blur-in" data-aos-delay="100" class="font-display font-bold text-kidora-dark leading-[1.1] mb-6 text-3xl md:text-5xl lg:text-6xl">
+                    Övladınızın <span class="text-kidora-pink">uğurlu gələcəyi</span><br>buradan başlayır
+                </h1>
+                <p data-aos="blur-in" data-aos-delay="150" class="text-gray-600 mb-5 md:mb-10 max-w-2xl mx-auto lg:mx-0 font-medium leading-relaxed text-[15px] md:text-lg">
+                    3 dildə (Azərbaycan, Rus, İngilis) mükəmməl tədris, illərin qüsursuz təcrübəsi və güvənli mühit. Bizimlə böyüyən uşaqlar məktəbdə həmişə seçilir!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start" data-aos="blur-in" data-aos-delay="200">
+                    <a href="qeydiyyat.html" class="bg-kidora-pink text-white px-8 py-4 tilt-card rounded-full font-bold hover:bg-rose-500 transition-all transform hover:-translate-y-1 shadow-[0_8px_0_#be123c] active:translate-y-1 active:shadow-none flex items-center justify-center gap-2 text-lg" data-cursor-hot>
+                        <span>Qeydiyyata Yazıl</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Image Content -->
+            <div class="flex-1 relative z-10 w-full max-w-lg lg:max-w-none mt-10 lg:mt-0" data-aos="blur-in">
+                <div class="relative rounded-[3rem] overflow-hidden border-8 border-white shadow-xl bg-kidora-blue aspect-[4/3] transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                    <img data-aos="blur-in" src="https://images.unsplash.com/photo-1544626053-8985dc34ae63?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Xoşbəxt uşaqlar" loading="eager" decoding="async" class="w-full h-full object-cover">
+
+                    <div class="absolute bottom-8 left-6 bg-white px-4 py-3 rounded-2xl shadow-xl transform -rotate-6 animate-float flex items-center gap-3" style="animation-delay: 1s;">
+                        <div class="w-10 h-10 bg-kidora-yellow rounded-full flex items-center justify-center text-white font-bold text-xl">
+                            👶🏻
+                        </div>
+                        <div class="flex flex-col text-left">
+                            <span class="font-bold leading-tight text-gray-800 text-sm">1-6 yaş</span>
+                            <span class="font-bold leading-tight text-kidora-green text-sm">qəbulu davam edir</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- About Section / Tarixçə -->
+    <section id="haqqimizda" class="py-10 md:py-24 px-5 md:px-6 bg-white relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center gap-16">
+                <div class="flex-1" data-aos="blur-in">
+                    <h2 data-aos="blur-in" class="text-kidora-blue font-bold tracking-widest uppercase mb-3 text-sm md:text-base">Tarixçəmiz və Reputasiyamız</h2>
+                    <h3 data-aos="blur-in" class="font-display font-bold text-kidora-dark leading-tight mb-4 md:mb-8 text-lg md:text-5xl">
+                        2011-ci ildən bəri dəyişməz keyfiyyət və etibar
+                    </h3>
+                    <p data-aos="blur-in" class="text-gray-600 mb-6 leading-relaxed text-lg">
+                        BabyHouse olaraq 2011-ci ildən etibarən rəsmi lisenziya əsasında fəaliyyət göstəririk. Bu illər ərzində ən böyük qürur mənbəyimiz bağçamızda <strong>heç bir xoşagəlməz halın baş verməməsi</strong> və hər zaman təhlükəsizliyin ən yüksək səviyyədə qorunmasıdır.
+                    </p>
+                    <p data-aos="blur-in" class="text-gray-600 mb-4 md:mb-8 leading-relaxed text-lg">
+                        Daim ardıcıl şəkildə bağçamıza gələn uşaqların valideynləri övladlarının məktəbə hazırlıq səviyyəsindən çox məmnundurlar. Məzunlarımız məktəblərdə hər zaman <strong>əla və yaxşı qiymətlərlə</strong> oxuyur, liderlik xüsusiyyətləri ilə seçilirlər.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 md:p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-green-100 text-kidora-green rounded-xl flex items-center justify-center text-xl">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <span class="font-bold text-gray-800">100% Təhlükəsizlik</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 bg-blue-100 text-kidora-blue rounded-xl flex items-center justify-center text-xl">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <span class="font-bold text-gray-800">Mükəmməl Nəticələr</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 relative" data-aos="blur-in">
+                    <img data-aos="blur-in" src="https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Uşaqlar dərnəkdə" class="rounded-[2rem] shadow-xl w-full h-[500px] object-cover" loading="lazy" decoding="async">
+                    <div class="absolute -bottom-6 left-4 md:-bottom-10 md:-left-10 bg-kidora-yellow text-kidora-dark p-4 md:p-8 rounded-2xl md:rounded-3xl shadow-xl w-48 md:w-64 rotate-3 z-20">
+                        <h4 data-aos="blur-in" class="font-display font-bold mb-1 md:mb-2 text-3xl md:text-5xl"><span data-count-to="15">0</span>+</h4>
+                        <p data-aos="blur-in" class="font-bold leading-tight text-xs md:text-lg">İllik qüsursuz təcrübə və fəaliyyət</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bölmələr (Sections) -->
+    <section id="bolmeler" class="py-10 md:py-24 px-5 md:px-6 bg-kidora-bg">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-4 md:mb-8 md:mb-16" data-aos="blur-in">
+                <h2 data-aos="blur-in" class="text-kidora-purple font-bold tracking-widest uppercase mb-3 text-sm md:text-base">Tədris Dilləri</h2>
+                <h3 data-aos="blur-in" class="font-display font-bold text-kidora-dark text-lg md:text-5xl">3 Fərqli Dildə Tədris</h3>
+                <p data-aos="blur-in" class="text-gray-600 mt-4 max-w-2xl mx-auto text-lg">Fəaliyyət göstərdiyimiz dövrdən etibarən uşaqların intellektual inkişafı üçün hər üç dildə peşəkar bölmələrimiz fəaliyyət göstərir.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-5 md:p-8">
+                <!-- Azərbaycanca -->
+                <div class="bg-white rounded-3xl p-5 md:p-8 card-shadow border border-gray-100 hover:border-kidora-pink transition-all group" data-aos="blur-in">
+                    
+                    <h4 data-aos="blur-in" class="font-display font-bold text-kidora-dark mb-4 text-lg md:text-2xl">Azərbaycan Bölməsi</h4>
+                    <p data-aos="blur-in" class="text-gray-600 leading-relaxed">Ana dilində mükəmməl nitq inkişafı, məktəbəqədər hazırlıq və milli dəyərlərin öyrədilməsi əsasında qurulmuş proqram.</p>
+                    <div class="mt-5 p-4 bg-pink-50 rounded-xl border border-pink-100 text-left relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-16 h-16 bg-pink-100 rounded-bl-full opacity-50"></div>
+                        <p data-aos="blur-in" class="text-kidora-dark font-bold mb-2 relative z-10 text-[13px]"><i class="fas fa-bullhorn text-kidora-pink mr-1"></i> Dövlət dəstəyi ilə qəbul davam edir!</p>
+                        <p data-aos="blur-in" class="text-kidora-pink font-extrabold mb-1 leading-tight relative z-10 text-[14px]">Aylıq ödəniş <del class="text-gray-400">500 AZN</del> əvəzinə cəmi 150 AZN!</p>
+                        <p data-aos="blur-in" class="text-gray-600 font-medium relative z-10 text-xs">2026–2027-ci tədris ili üçün myGov üzərindən müraciət edə bilərsiniz.</p>
+                    </div>
+                    <a href="qeydiyyat.html" class="inline-block mt-6 bg-kidora-pink text-white px-6 py-2 rounded-full font-bold shadow-md hover:bg-rose-500 transition-colors" data-cursor-hot>Qeydiyyat</a>
+                </div>
+                <!-- Rusca -->
+                <div class="bg-white rounded-3xl p-5 md:p-8 card-shadow border border-gray-100 hover:border-kidora-blue transition-all group" data-aos="blur-in" style="transition-delay: 100ms;">
+                    
+                    <h4 data-aos="blur-in" class="font-display font-bold text-kidora-dark mb-4 text-lg md:text-2xl">Rus Bölməsi</h4>
+                    <p data-aos="blur-in" class="text-gray-600 leading-relaxed">Rus dilində təməl anlayışlar, sərbəst danışıq mühiti və rus dilli məktəblərə tam zəmanətli hazırlıq.</p>
+                    <a href="qeydiyyat.html" class="inline-block mt-6 bg-kidora-blue text-white px-6 py-2 rounded-full font-bold shadow-md hover:bg-blue-600 transition-colors" data-cursor-hot>Qeydiyyat</a>
+                </div>
+                <!-- İngiliscə -->
+                <div class="bg-white rounded-3xl p-5 md:p-8 card-shadow border border-gray-100 hover:border-kidora-green transition-all group" data-aos="blur-in" style="transition-delay: 200ms;">
+                    
+                    <h4 data-aos="blur-in" class="font-display font-bold text-kidora-dark mb-4 text-lg md:text-2xl">İngilis Bölməsi</h4>
+                    <p data-aos="blur-in" class="text-gray-600 leading-relaxed">Uşaqlar üçün xüsusi seçilmiş beynəlxalq metodikalarla erkən yaşdan ingilis dili mühitinə inteqrasiya və tədris.</p>
+                    <a href="qeydiyyat.html" class="inline-block mt-6 bg-kidora-green text-white px-6 py-2 rounded-full font-bold shadow-md hover:bg-green-600 transition-colors" data-cursor-hot>Qeydiyyat</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dərnəklər (Extracurriculars) -->
+    <section id="dernekler" class="py-10 md:py-24 px-5 md:px-6 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-4 md:mb-8 md:mb-16 relative" data-aos="blur-in">
+                <h2 data-aos="blur-in" class="text-kidora-green font-bold tracking-widest uppercase mb-3 text-sm md:text-base">Genişyönümlü İnkişaf</h2>
+                <h3 data-aos="blur-in" class="font-display font-bold text-kidora-dark text-lg md:text-5xl">Xüsusi Dərnəklərimiz</h3>
+                <p data-aos="blur-in" class="text-gray-600 mt-4 max-w-2xl mx-auto text-lg">Uşaqların sadəcə zehni deyil, fiziki və yaradıcı inkişafı da bizim üçün mütləqdir.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-10">
+                <!-- Şahmat -->
+                <div class="relative group rounded-3xl overflow-hidden card-shadow" data-aos="blur-in">
+                    <img data-aos="blur-in" src="https://images.unsplash.com/photo-1590272455172-88544d6786a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Şahmat" class="w-full h-80 object-cover group-hover:scale-105 tilt-card transition-transform duration-700" loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-kidora-dark/90 via-kidora-dark/40 to-transparent flex flex-col justify-end p-5 md:p-8 text-white">
+                        <div class="w-12 h-12 bg-white text-kidora-dark rounded-full flex items-center justify-center mb-4 text-xl">
+                            <i class="fas fa-chess-knight"></i>
+                        </div>
+                        <h4 data-aos="blur-in" class="font-display font-bold mb-2 text-lg md:text-3xl">Şahmat Dərnəyi</h4>
+                        <p data-aos="blur-in" class="text-gray-200 font-medium">Məntiqi düşüncə, strategiya və diqqətin gücləndirilməsi üçün peşəkar şahmat dərsləri.</p>
+                    </div>
+                </div>
+
+                <!-- Musiqi -->
+                <div class="relative group rounded-3xl overflow-hidden card-shadow mt-0 lg:mt-12" data-aos="blur-in">
+                    <img data-aos="blur-in" src="https://images.unsplash.com/photo-1514119412350-e170420d9e26?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Musiqi" class="w-full h-80 object-cover group-hover:scale-105 tilt-card transition-transform duration-700" loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-kidora-dark/90 via-kidora-dark/40 to-transparent flex flex-col justify-end p-5 md:p-8 text-white">
+                        <div class="w-12 h-12 bg-white text-kidora-pink rounded-full flex items-center justify-center mb-4 text-xl">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h4 data-aos="blur-in" class="font-display font-bold mb-2 text-lg md:text-3xl">Musiqi Dərnəyi</h4>
+                        <p data-aos="blur-in" class="text-gray-200 font-medium">Ritmi hiss etmək, musiqi duyumunu artırmaq və enerjini düzgün yönləndirmək üçün əyləncəli dərslər.</p>
+                    </div>
+                </div>
+
+                <!-- Rəsm -->
+                <div class="relative group rounded-3xl overflow-hidden card-shadow" data-aos="blur-in">
+                    <img data-aos="blur-in" src="https://images.unsplash.com/photo-1606092195730-5d7b9af1efc5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Təsviri İncəsənət" class="w-full h-80 object-cover group-hover:scale-105 tilt-card transition-transform duration-700" loading="lazy" decoding="async">
+                    <div class="absolute inset-0 bg-gradient-to-t from-kidora-dark/90 via-kidora-dark/40 to-transparent flex flex-col justify-end p-5 md:p-8 text-white">
+                        <div class="w-12 h-12 bg-white text-kidora-yellow rounded-full flex items-center justify-center mb-4 text-xl">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h4 data-aos="blur-in" class="font-display font-bold mb-2 text-lg md:text-3xl">Təsviri İncəsənət</h4>
+                        <p data-aos="blur-in" class="text-gray-200 font-medium">Uşaqların xəyal dünyasını rənglərə tökməsi və kiçik motorikanın inkişafı üçün rəsm dərsləri.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="text-center mt-12" data-aos="blur-in">
+                <a href="dernekler.html" class="inline-flex items-center gap-2 bg-kidora-green text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg" data-cursor-hot>
+                    Hamsına bax <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us (Üstünlüklər & Counter Animation) -->
+    <section id="ustunlukler" class="py-10 md:py-24 px-5 md:px-6 bg-kidora-pink/5">
+        <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center gap-16">
+            <div class="flex-1 order-2 lg:order-1">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:p-6">
+                    <div class="bg-white p-5 md:p-8 rounded-3xl card-shadow border-t-4 border-kidora-blue" data-aos="blur-in">
+                        <h4 data-aos="blur-in" class="font-display font-bold text-kidora-blue mb-2 text-lg md:text-4xl" data-count-to="0">0</h4>
+                        <p data-aos="blur-in" class="font-bold text-gray-700">Xoşagəlməz hal: Mütləq təhlükəsizlik və nəzarət.</p>
+                    </div>
+                    <div class="bg-white p-5 md:p-8 rounded-3xl card-shadow border-t-4 border-kidora-pink sm:translate-y-8" data-aos="blur-in" style="transition-delay: 100ms;">
+                        <h4 data-aos="blur-in" class="font-display font-bold text-kidora-pink mb-2 text-lg md:text-4xl"><span data-count-to="100">0</span>%</h4>
+                        <p data-aos="blur-in" class="font-bold text-gray-700">Məktəbə hazırlıq üzrə uğurlu nəticələr.</p>
+                    </div>
+                    <div class="bg-white p-5 md:p-8 rounded-3xl card-shadow border-t-4 border-kidora-yellow" data-aos="blur-in" style="transition-delay: 200ms;">
+                        <h4 data-aos="blur-in" class="font-display font-bold text-kidora-yellow mb-2 text-lg md:text-4xl" data-count-to="3">0</h4>
+                        <p data-aos="blur-in" class="font-bold text-gray-700">Fərqli dildə zəngin tədris proqramı.</p>
+                    </div>
+                    <div class="bg-white p-5 md:p-8 rounded-3xl card-shadow border-t-4 border-kidora-green sm:translate-y-8" data-aos="blur-in" style="transition-delay: 300ms;">
+                        <h4 data-aos="blur-in" class="font-display font-bold text-kidora-green mb-2 text-lg md:text-4xl"><span data-count-to="3">0</span>+</h4>
+                        <p data-aos="blur-in" class="font-bold text-gray-700">Professional bacarıq inkişaf etdirici dərnək.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex-1 order-1 lg:order-2" data-aos="blur-in">
+                <h2 data-aos="blur-in" class="text-kidora-pink font-bold tracking-widest uppercase mb-3 text-sm md:text-base">Fərqimiz Nədir?</h2>
+                <h3 data-aos="blur-in" class="font-display font-bold text-kidora-dark leading-tight mb-4 md:mb-8 text-lg md:text-5xl">
+                    Uğurlu gələcəyin təməli sağlam mühitdə atılır
+                </h3>
+                <p data-aos="blur-in" class="text-gray-600 mb-6 leading-relaxed text-lg">
+                    Valideynlərin bizə əmanət etdiyi uşaqlar, yalnız təhsil almır, həm də mənəvi, psixoloji və fiziki olaraq cəmiyyətə hazırlanır. Uzun illərdir bizim bağçada tərbiyə alan hər bir uşağın məktəbə qədəm qoyduqda necə fərqləndiyini qürurla izləyirik.
+                </p>
+                <ul class="space-y-4 mb-4 md:mb-8">
+                    <li data-aos="blur-in" class="flex items-start gap-3">
+                        <i class="fas fa-check-circle text-kidora-green mt-1 text-xl"></i>
+                        <span class="text-gray-700 font-bold text-lg">Özəl və rəsmi lisenziyalı tədris müəssisəsi</span>
+                    </li>
+                    <li data-aos="blur-in" class="flex items-start gap-3">
+                        <i class="fas fa-check-circle text-kidora-green mt-1 text-xl"></i>
+                        <span class="text-gray-700 font-bold text-lg">Təcrübəli və peşəkar pedaqoq kollektivi</span>
+                    </li>
+                    <li data-aos="blur-in" class="flex items-start gap-3">
+                        <i class="fas fa-check-circle text-kidora-green mt-1 text-xl"></i>
+                        <span class="text-gray-700 font-bold text-lg">Daimi və müsbət valideyn geridönüşləri</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Gallery Section -->
+    <section id="qalereya" class="py-10 md:py-24 px-5 md:px-6 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12" data-aos="blur-in">
+                <div>
+                    <h2 data-aos="blur-in" class="text-pink-500 font-bold tracking-widest uppercase mb-3 text-sm md:text-base">Qalereya</h2>
+                    <h3 data-aos="blur-in" class="font-display font-bold text-kidora-dark text-lg md:text-5xl">Gündəlik Həyatımız</h3>
+                </div>
+                
+            </div>
+
+            <!-- Photo Gallery Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="block relative aspect-square group rounded-2xl overflow-hidden bg-gray-100" data-aos="blur-in" style="transition-delay: 0ms;">
+                    <img data-aos="blur-in" src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery Image 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" decoding="async">
+                </div>
+                <div class="block relative aspect-square group rounded-2xl overflow-hidden bg-gray-100" data-aos="blur-in" style="transition-delay: 100ms;">
+                    <img data-aos="blur-in" src="https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery Image 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" decoding="async">
+                </div>
+                <div class="block relative aspect-square group rounded-2xl overflow-hidden bg-gray-100" data-aos="blur-in" style="transition-delay: 200ms;">
+                    <img data-aos="blur-in" src="https://images.unsplash.com/photo-1544626053-8985dc34ae63?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery Image 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" decoding="async">
+                </div>
+                <div class="block relative aspect-square group rounded-2xl overflow-hidden bg-gray-100" data-aos="blur-in" style="transition-delay: 300ms;">
+                    <img data-aos="blur-in" src="https://images.unsplash.com/photo-1576495199011-eb94736d05d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery Image 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" loading="lazy" decoding="async">
+                </div>
+            </div>
+
+        </div>
+            <div class="text-center mt-12" data-aos="blur-in">
+                <a href="qalereya.html" class="inline-flex items-center gap-2 bg-pink-500 text-white px-8 py-4 rounded-full font-bold hover:bg-pink-600 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg" data-cursor-hot>
+                    Hamsına bax <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section (Suallar) -->
+    <section id="suallar" class="py-10 md:py-24 px-5 md:px-6 bg-kidora-bg relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="text-center mb-4 md:mb-8 md:mb-16" data-aos="blur-in">
+                <h2 data-aos="blur-in" class="text-kidora-blue font-bold tracking-widest uppercase mb-3 text-sm md:text-base">Tez-tez Verilən Suallar</h2>
+                <h3 data-aos="blur-in" class="font-display font-bold text-kidora-dark text-lg md:text-5xl">Bizi Daha Yaxından Tanıyın</h3>
+            </div>
+            
+            <div class="space-y-4">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden" data-aos="blur-in">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl" data-cursor-hot>
+                        <span>Bağçanızın iş saatları necədir?</span>
+                        <i class="fas fa-chevron-down text-kidora-blue transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">
+                            Bağçamız həftə içi 5 gün, səhər saat 08:00-dan axşam 18:30-dək fəaliyyət göstərir. İstirahət və bayram günləri qeyri-iş günləridir.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden" data-aos="blur-in" style="transition-delay: 100ms;">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl" data-cursor-hot>
+                        <span>Qidalanma necə təşkil olunur?</span>
+                        <i class="fas fa-chevron-down text-kidora-pink transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">
+                            Uşaqlar gündə 4 dəfə (səhər, nahar, ikindi, axşam) təbii və sağlam məhsullardan ibarət xüsusi pediatr təsdiqli menyu ilə qidalanırlar.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden" data-aos="blur-in" style="transition-delay: 200ms;">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center font-bold text-kidora-dark focus:outline-none text-xl" data-cursor-hot>
+                        <span>Hansı dərnəklər fəaliyyət göstərir?</span>
+                        <i class="fas fa-chevron-down text-kidora-yellow transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                        <div class="px-6 pb-5 text-gray-600 font-medium">
+                            Şahmat, rəsm, bədii gimnastika və məntiq dərnəklərimiz var. Hər biri peşəkar müəllimlər tərəfindən uşaqların fiziki və zehni inkişafı nəzərə alınaraq tədris olunur.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10" data-aos="blur-in">
+                <a href="suallar.html" class="inline-flex items-center gap-2 bg-kidora-blue text-white px-8 py-4 rounded-full font-bold hover:bg-blue-600 transition-all shadow-lg hover:-translate-y-1 text-lg" data-cursor-hot>
+                    Suallar bölməsinə keçid <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="elaqe" class="bg-kidora-dark text-white pt-20 pb-10 px-6 border-t-[16px] border-kidora-yellow relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between gap-3 md:gap-6 md:gap-12 md:gap-24 mb-4 md:mb-8 md:mb-16 w-full">
+                <!-- Brand -->
+                <div class="md:max-w-sm">
+                    <a href="#top" class="flex items-center gap-3 mb-6">
+                        <img src="BabyHouse.png" alt="BabyHouse" class="w-16 h-16 object-contain" loading="lazy" decoding="async">
+                        <div class="flex flex-col">
+                            <span class="font-display font-bold tracking-tight text-white leading-none text-lg md:text-2xl">BabyHouse</span>
+                            <span class="uppercase font-bold tracking-widest text-kidora-yellow mt-1 text-[10px]">Lisenziyalı Bağça</span>
+                        </div>
+                    </a>
+                    <p data-aos="blur-in" class="text-gray-400 leading-relaxed font-bold">
+                        2011-ci ildən bəri keyfiyyətli, etibarlı və lisenziyalı tədris mühiti. Övladınızın xoşbəxt gələcəyi üçün buradayıq.
+                    </p>
+                </div>
+                
+                
+                
+                <div class="flex flex-col text-left mt-12 md:mt-0 md:ml-auto">
+                    <!-- Contact -->
+                    <div>
+                        <h5 data-aos="blur-in" class="font-bold mb-6 text-kidora-green font-display text-xl">Əlaqə</h5>
+                        <ul class="space-y-4 text-gray-300 font-bold flex flex-col items-start">
+                            <li data-aos="blur-in">
+                                <a href="https://maps.app.goo.gl/sPDzZaFzyFPeUnvX7?g_st=ic" target="_blank" class="flex items-center gap-3 hover:text-white group" data-cursor-hot>
+                                    <i class="fas fa-map-marker-alt text-kidora-green group-hover:scale-110 transition-transform w-5 text-center text-lg"></i>
+                                    <span>Cəfər Xəndan küçəsi 2D Baku, Azerbaijan</span>
+                                </a>
+                            </li>
+                            <li data-aos="blur-in">
+                                <a href="https://wa.me/994553776710" target="_blank" class="flex items-center gap-3 hover:text-white group" data-cursor-hot>
+                                    <i class="fas fa-phone-alt text-kidora-green group-hover:scale-110 transition-transform w-5 text-center text-lg"></i>
+                                    <span>+994553776710</span>
+                                </a>
+                            </li>
+                            <li data-aos="blur-in">
+                                <a href="mailto:seferova.ziyafet@mail.ru" class="flex items-center gap-3 hover:text-white group" data-cursor-hot>
+                                    <i class="fas fa-envelope text-kidora-green group-hover:scale-110 transition-transform w-5 text-center text-lg"></i>
+                                    <span>seferova.ziyafet@mail.ru</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Social (Below Contact) -->
+                    <div class="mt-8 flex justify-start" data-aos="blur-in">
+                        <a href="https://www.instagram.com/babyhouse_az?stkn=MTB6b2cxYWJzYTdpYQ%3D%3D&utm_source=qr" target="_blank" class="flex items-center gap-3 bg-white/10 px-5 py-2 rounded-full hover:bg-pink-600 transition-colors shadow-lg text-lg group text-white" data-cursor-hot title="Instagram">
+                            <i class="fab fa-instagram group-hover:scale-110 transition-transform text-xl"></i>
+                            <span class="font-bold text-sm tracking-wide">Bizi İzləyin</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-gray-500 font-bold text-sm">
+                <p>&copy; 2026 BabyHouse. Bütün hüquqlar qorunur.</p>
+                <p class="mt-2 md:mt-0">Lisenziyalı təhsil müəssisəsi (2011)</p>
+            </div>
+        </div>
+    </footer>
+
+    </div>
+    <!-- App Scripts -->
+    <script src="app.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>AOS.init({ once: false, duration: 1000, offset: 120, easing: 'ease-out-cubic', mirror: true });</script>
+</body>
+</html>
