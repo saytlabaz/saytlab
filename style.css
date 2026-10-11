@@ -8,19 +8,19 @@
 /* ---------- 1. Dəyişənlər (CSS custom properties) ---------- */
 :root {
   /* Rəng sistemi */
-  /* Yaşıl palitra (2026-10, ikinci yeniləmə): əsas fon #004200 götürüldü, digər
+  /* Yaşıl palitra (2026-10, üçüncü yeniləmə): əsas fon #023002 götürüldü, digər
      səthlər ondan bir pillə açıq tonlarla qurulur. Tarixçə:
-     --bg        #0a1712 → #0f2219 → #004200
-     --bg-2      #0d1e17 → #13281e → #054b09
-     --surface   #12261d → #183126 → #0b5512
-     --surface-2 #17301f → #1e3b2c → #13601b
-     Loqonun fonu da uyğunlaşdırıldı: #121d18 → #1a3629 → #0b5512 (logo-saytlab-round.png). */
-  --bg:            #004200;   /* əsas fon — açıq zümrüd yaşılı */
-  --bg-2:          #054b09;
-  --surface:       #0b5512;   /* kart fonu */
-  --surface-2:     #13601b;   /* qalxmış səth */
-  --bg-rgb:        0, 66, 0;   /* --bg-in RGB forması — şəffaf header/overlay fonları üçün */
-  --surface-rgb:   11, 85, 18; /* --surface-in RGB forması — şüşə menyu zolağı üçün */
+     --bg        #0a1712 → #0f2219 → #004200 → #023002
+     --bg-2      #0d1e17 → #13281e → #054b09 → #063808
+     --surface   #12261d → #183126 → #0b5512 → #0b420e
+     --surface-2 #17301f → #1e3b2c → #13601b → #124d16
+     Loqonun fonu da uyğunlaşdırıldı: → #0b420e (logo-saytlab-round.png). */
+  --bg:            #023002;   /* əsas fon — zümrüd yaşılı */
+  --bg-2:          #063808;
+  --surface:       #0b420e;   /* kart fonu */
+  --surface-2:     #124d16;   /* qalxmış səth */
+  --bg-rgb:        2, 48, 2;   /* --bg-in RGB forması — şəffaf header/overlay fonları üçün */
+  --surface-rgb:   11, 66, 14; /* --surface-in RGB forması — şüşə menyu zolağı üçün */
   --border:        rgba(233, 190, 122, 0.14);
   --border-strong: rgba(233, 190, 122, 0.30);
 
