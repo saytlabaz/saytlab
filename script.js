@@ -85,13 +85,10 @@ window.addEventListener('load', () => {
 });
 
 /* ===================================================================
-   WhatsApp nömrəsi — TƏK MƏNBƏ.
-   Həm bu fayldakı "Sifariş et" düymələri, həm də domain-search.js bunu
-   istifadə edir; nömrə heç yerdə təkrar yazılmır (window-a da verilir ki,
-   ayrıca fayl ona müraciət edə bilsin).
+   WhatsApp nömrəsi — TƏK MƏNBƏ wa.js-dədir (bütün səhifələrdə yüklənir,
+   bu fayldan ƏVVƏL). Fallback yalnız wa.js nəzəri olaraq yüklənməsə.
    =================================================================== */
-const WA_NUMBER = '994103136941';
-window.SAYTLAB_WA_NUMBER = WA_NUMBER;
+const WA_NUMBER = window.SAYTLAB_WA_NUMBER || '994103136941';
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -112,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
     about:    'Haqqımızda — Saytlab',
     benefits: 'Üstünlüklər — Saytlab',
     domain:   'Domen — Saytlab',
+    email:    'E-poçt — Saytlab',
     pricing:  'Qiymətlər — Saytlab',
     faq:      'Suallar — Saytlab',
     contact:  'Əlaqə — Saytlab',
@@ -384,6 +382,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .map(id => document.getElementById(id))
     .filter(Boolean);
 
+  const navLinks = $$('.main-nav a[href^="#"]');
   if (titleSections.length) {
     let currentTitleId = null;
     const titleIO = new IntersectionObserver((entries) => {
@@ -397,6 +396,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (best && best.target.id !== currentTitleId) {
         currentTitleId = best.target.id;
         document.title = SECTION_TITLES[currentTitleId] || DEFAULT_TITLE;
+        // Scroll-spy: menyuda cari bölmənin linki vurğulanır (menyuda olmayan bölmədə heç biri).
+        navLinks.forEach(a => {
+          const on = a.getAttribute('href') === '#' + currentTitleId;
+          a.classList.toggle('is-active', on);
+          if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current');
+        });
       }
     }, { threshold: [0.35, 0.5, 0.65] });   // bölmənin ~35–65%-i görünəndə tetiklənir
     titleSections.forEach(el => titleIO.observe(el));
@@ -516,7 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
           sonra yönləndir — belə ki keçid hər iki tərəfdən hamar görünsün.
           (o səhifələr legal.js ilə fade-in edir.)
      =================================================================== */
-  $$('a[href="/terms"], a[href="/privacy"], a[href="/templates"]').forEach(link => {
+  $$('a[href="/terms"], a[href="/privacy"], a[href="/templates"], a[href="/xidmetler"]').forEach(link => {
     link.addEventListener('click', (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0 || link.target === '_blank') return;
       e.preventDefault();
@@ -549,8 +554,8 @@ document.addEventListener('DOMContentLoaded', () => {
   syncFaqAria();
 
   /* ===================================================================
-     12. Pricing "Sifariş et" — yalnız paket adı ilə əvvəlcədən doldurulmuş
-         WhatsApp mesajı. Qiymət saytda göstərilmir, mesajda da keçmir.
+     12. Pricing "Sifariş et" — paket adı + qiyməti ilə hazır WhatsApp
+         SİFARİŞ mesajı. Ad h3-dən, qiymət .price-tag-dan oxunur (tək mənbə — HTML).
          HTML-dəki href yalnız fallback (JS işləməzsə).
      =================================================================== */
   $$('.price-card').forEach(card => {
@@ -558,8 +563,53 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!link) return;
     const plan = ($('h3', card)?.textContent || '').trim();
     if (!plan) return;
-    const msg = `Salam! ${plan} paketi ilə maraqlanıram, ətraflı məlumat almaq istəyirəm.`;
+    const price = ($('.price-tag strong', card)?.textContent || '').trim();
+    const msg = price
+      ? `Salam! ${plan} paketi (${price} AZN) sifariş etmək istəyirəm.`
+      : `Salam! ${plan} paketi sifariş etmək istəyirəm.`;
     link.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
   });
+
+  /* ===================================================================
+     13. Logo marquee — HƏR ekran enində fasiləsiz axın.
+         Problem: HTML-də 7 logo × 2 nüsxə var idi; geniş monitorda bir nüsxə
+         ekrandan dar olduğu üçün zolağın sonu görünür, arxası boş qalırdı.
+         Həll: bir nüsxənin enini ölçüb, yarı-zolaq ekranı tam örtənə qədər
+         təkrarlayırıq, sonra yarını ikiqat edirik (translateX(-50%) = tam bir dövr).
+         Sürət sabit qalsın deyə müddət nüsxə sayı ilə mütənasib artır.
+         JS yoxdursa HTML-dəki 2 nüsxə (köhnə davranış) qalır.
+     =================================================================== */
+  const marqueeTrack = $('.marquee-track');
+  if (marqueeTrack) {
+    const SET_SIZE = 7;
+    const SECONDS_PER_SET = 18;
+    const baseSet = $$('.marquee-logo', marqueeTrack).slice(0, SET_SIZE).map(n => n.cloneNode(true));
+    let builtReps = 0;
+    const buildMarquee = () => {
+      // bir nüsxənin enini ölç
+      marqueeTrack.replaceChildren(...baseSet.map(n => n.cloneNode(true)));
+      const setW = marqueeTrack.scrollWidth || 1;
+      const reps = Math.max(1, Math.ceil((window.innerWidth + 1) / setW));
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < reps * 2; i++) baseSet.forEach(n => frag.append(n.cloneNode(true)));
+      marqueeTrack.replaceChildren(frag);
+      marqueeTrack.style.setProperty('--marquee-dur', (reps * SECONDS_PER_SET) + 's');
+      builtReps = reps;
+    };
+    buildMarquee();
+    let marqueeTimer = 0;
+    window.addEventListener('resize', () => {
+      clearTimeout(marqueeTimer);
+      marqueeTimer = setTimeout(() => {
+        const setW = (marqueeTrack.scrollWidth / (builtReps * 2)) || 1;
+        if (Math.ceil((window.innerWidth + 1) / setW) !== builtReps) buildMarquee();
+      }, 200);
+    }, { passive: true });
+    // şriftlər/şəkillər gec yüklənsə ölçü dəyişə bilər — load-da bir dəfə yoxla
+    window.addEventListener('load', () => {
+      const setW = (marqueeTrack.scrollWidth / (builtReps * 2)) || 1;
+      if (Math.ceil((window.innerWidth + 1) / setW) !== builtReps) buildMarquee();
+    });
+  }
 
 });

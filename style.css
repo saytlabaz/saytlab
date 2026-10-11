@@ -8,10 +8,16 @@
 /* ---------- 1. Dəyişənlər (CSS custom properties) ---------- */
 :root {
   /* Rəng sistemi */
-  --bg:            #0a1712;   /* əsas fon — dərin zümrüd-qara */
-  --bg-2:          #0d1e17;
-  --surface:       #12261d;   /* kart fonu */
-  --surface-2:     #17301f;   /* qalxmış səth */
+  /* Yaşıl tonlar cüzi açıldı (2026-10) — köhnə dəyərlər şərhdə saxlanılır:
+     --bg #0a1712 → #0f2219 · --bg-2 #0d1e17 → #13281e
+     --surface #12261d → #183126 · --surface-2 #17301f → #1e3b2c
+     Loqonun fonu da uyğun açıldı: #121d18 → #1a3629 (logo-saytlab-round.png). */
+  --bg:            #0f2219;   /* əsas fon — zümrüd yaşılı (əvvəl #0a1712) */
+  --bg-2:          #13281e;   /* (əvvəl #0d1e17) */
+  --surface:       #183126;   /* kart fonu (əvvəl #12261d) */
+  --surface-2:     #1e3b2c;   /* qalxmış səth (əvvəl #17301f) */
+  --bg-rgb:        15, 34, 25; /* --bg-in RGB forması — şəffaf header/overlay fonları üçün */
+  --surface-rgb:   24, 49, 38; /* --surface-in RGB forması — şüşə menyu zolağı üçün */
   --border:        rgba(233, 190, 122, 0.14);
   --border-strong: rgba(233, 190, 122, 0.30);
 
@@ -232,7 +238,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 /* ---------- 6. Header ---------- */
 .site-header {
   position: sticky; top: 0; z-index: 100;
-  padding-block: 14px;
+  padding-block: 18px;
   /* backdrop-filter animasiya EDİLMİR (hər scroll frame-də arxa fonu blur edərdi) —
      yalnız rəng/kənar keçir, blur is-scrolled ilə sərt açılır.
      translate3d ayrıca transition-da — rəng keçidi ilə eyni frame-i "jank" etməsin deyə GPU qatı öz-özünədir. */
@@ -241,7 +247,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
   will-change: transform;
 }
 .site-header.is-scrolled {
-  background: rgba(10, 23, 18, 0.72);
+  background: rgba(var(--bg-rgb), 0.72);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border-bottom-color: var(--border);
@@ -268,19 +274,46 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 }
 .header-close:hover, .header-close:focus-visible { color: var(--accent); border-color: var(--accent); }
 .header-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-/* Header konteyneri tam enə yayılır — loqo ekranın sol kənarına (yalnız --gutter qədər),
-   menyu isə sağ kənara "yapışır". Ortada süni boşluq qalmır.
-   Sayt bölmələri əvvəlki kimi --container (1180px) daxilində mərkəzləşməkdə davam edir. */
+/* Header konteyneri tam enə yayılır — loqo solda, CTA sağda (yalnız --gutter qədər boşluq),
+   menyu isə ORTADA "şüşə" zolaq kimi dayanır: 3 sütunlu grid (1fr auto 1fr) — nav həmişə
+   ekranın dəqiq mərkəzində qalır, loqo/CTA eninin fərqindən asılı olmayaraq.
+   Sayt bölmələri əvvəlki kimi --container daxilində mərkəzləşməkdə davam edir. */
 .site-header .header-inner { max-width: none; }
-.header-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
-.logo { display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; letter-spacing: -0.02em; margin-right: auto; }
-/* PNG loqo — DAİRƏVİ kəsim (border-radius:50% + object-fit:cover). Hündürlük header ritmini pozmasın. */
-.logo-img { height: 36px; width: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; }
-.site-footer .logo-img { height: 30px; }
+.header-inner { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+.header-inner > .logo { justify-self: start; }
+.logo { display: inline-flex; align-items: center; gap: 11px; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; }
+/* PNG loqo — DAİRƏVİ kəsim (border-radius:50% + object-fit:cover). İncə qızılı halqa ilə. */
+.logo-img { height: 40px; width: auto; aspect-ratio: 1; border-radius: 50%; object-fit: cover; box-shadow: 0 0 0 1px var(--border-strong); }
+.site-footer .logo-img { height: 32px; }
 
-.main-nav { display: flex; gap: 30px; }
-.main-nav a { font-size: 0.92rem; color: var(--text-muted); transition: color 0.2s var(--ease); }
-.main-nav a:hover { color: var(--text); }
+.main-nav {
+  display: flex; align-items: center; gap: 2px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(var(--surface-rgb), 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.main-nav a {
+  position: relative;
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  color: var(--text-muted);
+  transition: color 0.2s var(--ease), background-color 0.2s var(--ease);
+}
+.main-nav a:hover { color: var(--text); background: rgba(243, 238, 225, 0.06); }
+.main-nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* scroll-spy (script.js) və ya cari səhifə (aria-current="page") */
+.main-nav a.is-active,
+.main-nav a[aria-current="page"] { color: var(--accent-ink); background: var(--accent); }
+
+/* Sağdakı CTA + mobil düymələr bir qrupda, sağ kənarda */
+.header-cta { justify-self: end; grid-column: 3; grid-row: 1; box-shadow: 0 6px 20px var(--glow); }
+.menu-toggle, .header-close { grid-row: 1; }
 
 .menu-toggle { display: none; width: 40px; height: 40px; flex-direction: column; gap: 5px; align-items: center; justify-content: center; }
 .menu-toggle span { width: 20px; height: 2px; background: var(--text); transition: transform 0.3s var(--ease), opacity 0.3s var(--ease); }
@@ -301,14 +334,19 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
   visibility: hidden;
 }
 .mobile-overlay.is-open { -webkit-clip-path: inset(0 0 0% 0); clip-path: inset(0 0 0% 0); opacity: 1; visibility: visible; }
-.mobile-nav { display: flex; flex-direction: column; gap: 26px; text-align: center; }
-.mobile-nav a { font-family: var(--font-display); font-size: 1.7rem; font-weight: 500; opacity: 0; transform: translateY(18px); transition: opacity 0.4s var(--ease), transform 0.4s var(--ease); }
+.mobile-overlay { overflow-y: auto; padding-block: 90px 40px; }
+.mobile-nav { display: flex; flex-direction: column; gap: clamp(14px, 2.6vh, 24px); text-align: center; margin: auto 0; }
+.mobile-nav a { font-family: var(--font-display); font-size: clamp(1.3rem, 5.4vw, 1.7rem); font-weight: 500; opacity: 0; transform: translateY(18px); transition: opacity 0.4s var(--ease), transform 0.4s var(--ease); }
 .mobile-overlay.is-open .mobile-nav a { opacity: 1; transform: none; }
 .mobile-overlay.is-open .mobile-nav a:nth-child(1) { transition-delay: 0.12s; }
 .mobile-overlay.is-open .mobile-nav a:nth-child(2) { transition-delay: 0.17s; }
 .mobile-overlay.is-open .mobile-nav a:nth-child(3) { transition-delay: 0.22s; }
 .mobile-overlay.is-open .mobile-nav a:nth-child(4) { transition-delay: 0.27s; }
 .mobile-overlay.is-open .mobile-nav a:nth-child(5) { transition-delay: 0.32s; }
+.mobile-overlay.is-open .mobile-nav a:nth-child(6) { transition-delay: 0.37s; }
+.mobile-overlay.is-open .mobile-nav a:nth-child(7) { transition-delay: 0.42s; }
+.mobile-overlay.is-open .mobile-nav a:nth-child(8) { transition-delay: 0.47s; }
+.mobile-overlay.is-open .mobile-nav a:nth-child(9) { transition-delay: 0.52s; }
 
 /* ---------- 9. HERO ---------- */
 .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; position: relative; overflow: hidden; padding-block: 120px 80px; }
@@ -366,6 +404,21 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 }
 
 .hero-inner { position: relative; z-index: 2; }
+
+/* Geniş ekran: məzmun kənarlara doğru açılır — başlıq solda, mətn/CTA sağda,
+   statistika altda tam en. Konteyner hero üçün genişləndirilir (1220 → 1480px). */
+@media (min-width: 1100px) {
+  .hero .hero-inner {
+    max-width: 1480px;
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    column-gap: clamp(48px, 7vw, 140px);
+    align-items: end;
+  }
+  .hero-side { padding-bottom: 0.6rem; }
+  .hero-side .hero-sub { margin-top: 0; max-width: 520px; }
+  .hero-stats { grid-column: 1 / -1; }
+}
 
 .hero-eyebrow {
   display: inline-flex; align-items: center; gap: 9px;
@@ -461,13 +514,17 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 /* ---------- 12. Logo marquee ---------- */
 .logos { padding-block: clamp(48px, 7vw, 84px); }
 .marquee { overflow: hidden; position: relative; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
-.marquee-track { display: flex; align-items: center; gap: 46px; width: max-content; animation: marquee 26s linear infinite; animation-play-state: var(--anim-state, running); will-change: transform; }
+/* Aralıq gap ilə DEYİL, hər logonun margin-right-ı ilə verilir: belə zolağın eni düz 2 × nüsxə olur
+   və translateX(-50%) dövrün sonunda "tikiş" sıçrayışı yaratmır. Müddət JS-də (--marquee-dur)
+   nüsxə sayına görə hesablanır ki, geniş ekranda da sürət eyni qalsın. */
+.marquee-track { display: flex; align-items: center; width: max-content; animation: marquee var(--marquee-dur, 26s) linear infinite; animation-play-state: var(--anim-state, running); will-change: transform; }
 .marquee:hover .marquee-track { animation-play-state: paused; }
 /* Hər logo bərabər ölçülü qutuya yerləşir və öz rəngindən asılı olmayaraq
    mask-image + background ilə vahid AĞ silueyə çevrilir. Qutu sabit olduğu
    üçün marquee-də aralıqlar bərabər, "çəki" isə oxşar görünür. */
 .marquee-track .marquee-logo {
   flex: 0 0 auto;
+  margin-right: 46px;
   width: clamp(74px, 9vw, 100px);
   height: clamp(24px, 3vw, 30px);
   opacity: 0.72;
@@ -516,9 +573,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .price-card .badge { position: absolute; z-index: 3; top: -12px; left: 28px; background: var(--accent); color: var(--accent-ink); font-family: var(--font-display); font-size: 0.72rem; padding: 5px 12px; border-radius: 999px; letter-spacing: 0.04em; }
 /* LED overlay (.led-border::before, z-index: 1) kartın məzmununu örtməsin. */
 .price-card > * { position: relative; z-index: 2; }
-/* Qiymət göstəricisi (.price-tag) HTML-dən çıxarılıb — başlıqdan sonrakı boşluq onun yerini tutur. */
-.price-card h3 { font-size: 1.2rem; margin-bottom: 22px; }
-.price-tag { display: flex; align-items: baseline; gap: 4px; margin-bottom: 22px; font-family: var(--font-display); }
+.price-card h3 { font-size: 1.2rem; margin-bottom: 12px; }
+.price-tag { display: flex; align-items: baseline; gap: 6px; margin-bottom: 22px; font-family: var(--font-display); }
 .price-tag strong { font-size: 2.4rem; font-weight: 600; color: var(--accent-2); }
 .price-tag span { color: var(--text-dim); font-size: 1rem; }
 .price-card ul { display: flex; flex-direction: column; gap: 10px; margin-bottom: 26px; }
@@ -665,7 +721,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .template-preview-overlay {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  background: rgba(10, 23, 18, 0.55);
+  background: rgba(var(--bg-rgb), 0.55);
   color: var(--accent-2);
   font-family: var(--font-display);
   font-size: 0.85rem;
@@ -782,9 +838,10 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 }
 .about-card p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; }
 
-/* ---------- 21d. Əlaqə — sadələşdirilmiş: yalnız e-poçt + telefon, ikonlu ---------- */
-.contact-layout { max-width: 460px; }
+/* ---------- 21d. Əlaqə — solda birbaşa əlaqə, sağda WhatsApp-a gedən forma ---------- */
+.contact-layout { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 18px; align-items: start; }
 .contact-direct { padding: 30px; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); }
+.contact-value { color: var(--text); }
 .contact-direct h3 { font-size: 1.15rem; margin-bottom: 20px; }
 .contact-direct ul { display: flex; flex-direction: column; gap: 18px; }
 .contact-direct li { display: flex; align-items: center; gap: 14px; }
@@ -802,6 +859,183 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .contact-direct li a { color: var(--text); transition: color 0.2s var(--ease); word-break: break-word; }
 .contact-direct li a:hover { color: var(--accent); }
 
+.contact-form {
+  display: flex; flex-direction: column; gap: 16px;
+  padding: clamp(22px, 3.4vw, 34px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  box-shadow: var(--shadow-1);
+}
+.cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.cf-field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.cf-label { font-family: var(--font-display); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-dim); }
+.cf-label em { font-style: normal; text-transform: none; letter-spacing: 0; }
+.cf-input {
+  width: 100%;
+  padding: 13px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-2);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.cf-input::placeholder { color: var(--text-dim); }
+.cf-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(230, 184, 102, 0.14); }
+.cf-input[aria-invalid="true"] { border-color: #d1785f; }
+textarea.cf-input { resize: vertical; min-height: 120px; line-height: 1.55; }
+select.cf-input {
+  appearance: none; -webkit-appearance: none;
+  padding-right: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23e6b866' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  cursor: pointer;
+}
+select.cf-input option { background: var(--bg-2); color: var(--text); }
+.cf-error { color: #e79b83; font-size: 0.9rem; }
+.cf-error[hidden] { display: none; }
+.cf-submit { align-self: flex-start; }
+.cf-submit svg { transition: transform 0.25s var(--ease); }
+.cf-submit:hover svg { transform: translateX(3px); }
+.cf-note { color: var(--text-dim); font-size: 0.82rem; }
+
+/* ---------- 21e. Korporativ e-poçt (#email) ---------- */
+.email-sample { color: var(--accent-2); font-family: var(--font-display); white-space: nowrap; }
+.email-layout { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 18px; align-items: stretch; }
+.email-features { padding: clamp(24px, 3.4vw, 34px); border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--surface); }
+.email-list { display: grid; grid-template-columns: 1fr 1fr; gap: 26px 28px; }
+.email-list li { position: relative; display: flex; flex-direction: column; gap: 6px; padding-left: 30px; }
+.email-list li::before {
+  content: "✓";
+  position: absolute; left: 0; top: 1px;
+  display: flex; align-items: center; justify-content: center;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: rgba(230, 184, 102, 0.14);
+  box-shadow: inset 0 0 0 1px var(--border-strong);
+  color: var(--accent); font-size: 0.7rem;
+}
+.email-list strong { font-family: var(--font-display); font-weight: 600; font-size: 1.04rem; }
+.email-list span { color: var(--text-muted); font-size: 0.93rem; }
+.email-offer {
+  display: flex; flex-direction: column;
+  padding: clamp(24px, 3.4vw, 34px);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+.email-offer > * { position: relative; z-index: 2; }
+.email-offer-label { font-family: var(--font-display); font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.16em; color: var(--accent); margin-bottom: 10px; }
+.email-offer .price-tag { margin-bottom: 10px; }
+.email-offer-text { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 22px; }
+.email-included {
+  display: flex; gap: 12px; align-items: flex-start;
+  margin-top: 20px; padding: 14px 16px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--r-md);
+  background: rgba(230, 184, 102, 0.06);
+  color: var(--text-muted); font-size: 0.9rem; line-height: 1.55;
+}
+.email-included strong { color: var(--text); font-weight: 600; }
+.email-included-ic {
+  flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  font-size: 0.72rem; font-weight: 700;
+}
+
+/* ---------- 21f. Üzən WhatsApp düyməsi (bütün səhifələr) ----------
+   Sağ altda dairəvi düymə + yumşaq "nəbz" halqası. Hover-də solda kiçik etiket açılır.
+   Mobil menyu açıq olanda gizlənir (overlay ilə toqquşmasın). */
+.wa-float {
+  position: fixed;
+  right: clamp(16px, 2.4vw, 28px);
+  bottom: clamp(16px, 2.4vw, 28px);
+  z-index: 150;
+  display: flex; align-items: center; justify-content: center;
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(37, 211, 102, 0.5);
+  transition: transform 0.25s var(--ease), opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+  animation: waPulse 2.6s ease-out infinite;
+}
+.wa-float svg { width: 30px; height: 30px; }
+.wa-float:hover { transform: translateY(-3px) scale(1.04); }
+.wa-float:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+@keyframes waPulse {
+  0%   { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(37, 211, 102, 0.45); }
+  70%  { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 16px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(37, 211, 102, 0); }
+}
+.wa-float-tip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 0.84rem;
+  white-space: nowrap;
+  box-shadow: var(--shadow-1);
+  opacity: 0;
+  transform: translate(8px, -50%);
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.wa-float:hover .wa-float-tip,
+.wa-float:focus-visible .wa-float-tip { opacity: 1; transform: translate(0, -50%); }
+.mobile-overlay.is-open ~ .wa-float { opacity: 0; visibility: hidden; pointer-events: none; }
+@media (max-width: 560px) {
+  .wa-float { width: 54px; height: 54px; }
+  .wa-float svg { width: 27px; height: 27px; }
+}
+
+/* ---------- 21i. Xüsusi xidmətlər səhifəsi (xidmetler.html) ---------- */
+.svc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+.svc-card {
+  display: flex; flex-direction: column;
+  padding: 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.svc-card:hover { transform: translateY(-4px); border-color: var(--border-strong); }
+.svc-card.is-main { border-color: var(--accent); background: linear-gradient(180deg, var(--surface-2), var(--surface)); }
+.svc-ic {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; margin-bottom: 18px;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  background: rgba(230, 184, 102, 0.1);
+  color: var(--accent);
+}
+.svc-ic svg { width: 22px; height: 22px; }
+.svc-card h2, .svc-card h3 { font-size: 1.14rem; margin-bottom: 8px; }
+.svc-card p { color: var(--text-muted); font-size: 0.93rem; margin-bottom: 18px; }
+.svc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+.svc-tags li { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; font-size: 0.76rem; color: var(--text-dim); }
+.svc-card .btn { margin-top: auto; align-self: flex-start; }
+.svc-cta {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 28px;
+  margin-top: clamp(36px, 5vw, 56px);
+  padding: clamp(24px, 3.4vw, 36px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+}
+.svc-cta h2 { font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom: 6px; }
+.svc-cta p { color: var(--text-muted); }
+
 /* ---------- 21h. Hüquqi səhifələr — Qaydalar / Məxfilik (terms.html, privacy.html) ---------- */
 .legal-body { max-width: 760px; }
 .legal-body p { color: var(--text-muted); font-size: 0.96rem; margin-bottom: 16px; }
@@ -809,22 +1043,33 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .legal-back { margin-top: 28px; }
 
 /* ---------- 22. Responsiv ---------- */
-@media (max-width: 960px) {
+/* 8 menyu bəndi + CTA geniş yer tələb edir — mərkəzi menyu 1180px-dən aşağıda
+   burger menyuya keçir (əvvəl 960px idi). */
+@media (max-width: 1180px) {
   .main-nav { display: none; }
+  .header-inner { display: flex; gap: 10px; }
+  .header-inner > .logo { margin-right: auto; }
   .menu-toggle { display: flex; }
   .header-close { display: inline-flex; }
+}
+@media (max-width: 560px) {
+  .header-cta { display: none; }
+}
+
+@media (max-width: 960px) {
   /* Mobil-də header arxa fonu daha qatı — altdakı kontent görünüb mətni pozmasın.
      Fon 0.94 qatı olduğu üçün blur-un vizual töhfəsi minimaldır, ona görə 18px→8px:
      backdrop-filter WebKit/Safari-də scroll boyu hər frame-də hesablanır və ən bahalı
      effektlərdəndir. Görünüş demək olar dəyişmir, jank isə aradan qalxır. */
   .site-header.is-scrolled {
-    background: rgba(10, 23, 18, 0.94);
+    background: rgba(var(--bg-rgb), 0.94);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
   .benefit-grid, .price-grid { grid-template-columns: 1fr 1fr; }
   .service-grid { grid-template-columns: 1fr; }
   .about-grid { grid-template-columns: 1fr; }
+  .contact-layout, .email-layout { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 768px) {
@@ -834,6 +1079,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
   .price-card.is-featured:hover { transform: translateY(-4px); }
   .hero-stats { gap: 0; }
   .hero-stats .stat { flex: 1 1 45%; }
+  .email-list, .cf-row { grid-template-columns: 1fr; }
+  .cf-submit { align-self: stretch; }
 
   /* Footer marka bloku — mobil-də logo, "Saytlab" yazısı və təsvir mərkəzdə */
   .footer-brand { display: flex; flex-direction: column; align-items: center; text-align: center; }
@@ -844,16 +1091,6 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
   .reveal { transition: transform 640ms var(--ease-reveal), opacity 560ms var(--ease-reveal); }
   .js-reveal .reveal,
   .js-reveal .reveal[data-visible] { filter: none; }
-}
-
-/* Hero məzmununu yalnız geniş ekranlarda bir qədər sola çək — mərkəzləmə çox "sıx" görünürdü.
-   margin-left auto-nun bir hissəsini "yeyir", amma max() ilə heç vaxt gutter-dən aşağı düşmür,
-   yəni məzmun ekran kənarına YAPIŞMIR. Kiçik desktop / mobil-də təsirsizdir (max() gutter qaytarır). */
-@media (min-width: 1180px) {
-  .hero .hero-inner {
-    margin-left: max(var(--gutter), calc((100% - var(--container)) / 2 - clamp(0px, 3vw, 60px)));
-    margin-right: auto;
-  }
 }
 
 @media (max-width: 420px) {
@@ -1009,7 +1246,7 @@ html.cursor-custom, html.cursor-custom * { cursor: none !important; }
     opacity: 1 !important;
   }
   /* bütün sonsuz / dekorativ hərəkət dayandırılır */
-  .blob, .marquee-track, .pulse-grid i,
+  .blob, .marquee-track, .wa-float, .pulse-grid i,
   [class*="spin"], [class*="pulse"], [class*="breathe"] { animation: none !important; }
   [data-hero] { opacity: 1 !important; transform: none !important; }
   /* header həmişə görünən qalır, mouse-glow heç görünmür */

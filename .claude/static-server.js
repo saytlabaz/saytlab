@@ -3,7 +3,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const ROOT = '/Users/faiqkarimli/Downloads/WebSite/saytlab-proje';
+const ROOT = path.resolve(__dirname, '..');
 const PORT = 4173;
 const TYPES = {
   '.html': 'text/html; charset=utf-8',

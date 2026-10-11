@@ -16,7 +16,7 @@
      şəkil görünsün deyə. Şəkil: og-cover.png (1200×630).
      canonical `cleanUrls: true` səbəbindən .html-siz formadadır. -->
 <link rel="canonical" href="https://www.saytlab.com/" />
-<meta name="theme-color" content="#0a1712" />
+<meta name="theme-color" content="#0f2219" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Saytlab" />
 <meta property="og:locale" content="az_AZ" />
@@ -81,19 +81,24 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
 <header class="site-header" id="top">
   <div class="container header-inner">
     <a href="#top" class="logo" aria-label="Saytlab ana səhifə">
-      <!-- Loqo: "Logo SaytLab.png"-in boşluqsuz kopyası — dairəvi dizayn (CSS-də border-radius:50%). -->
+      <!-- Loqo — dairəvi dizayn (CSS-də border-radius:50%). -->
       <img class="logo-img" src="logo-saytlab-round.png" alt="Saytlab" width="40" height="40" />
       <span>Saytlab</span>
     </a>
 
+    <!-- Mərkəzləşdirilmiş "şüşə" menyu zolağı. Aktiv bölmə script.js-də (scroll-spy) .is-active alır. -->
     <nav class="main-nav" id="mainNav" aria-label="Əsas naviqasiya">
       <a href="#services">Xidmətlər</a>
       <a href="#domain">Domen</a>
+      <a href="#email">E-poçt</a>
       <a href="#pricing">Qiymətlər</a>
       <a href="/templates">Şablonlar</a>
+      <a href="/xidmetler">Xüsusi xidmətlər</a>
       <a href="#faq">Suallar</a>
       <a href="#contact">Əlaqə</a>
     </nav>
+
+    <a href="#pricing" class="btn btn-solid btn-sm header-cta">Sifariş et</a>
 
     <button class="menu-toggle" id="menuToggle" aria-label="Menyunu aç" aria-expanded="false">
       <span></span><span></span>
@@ -111,8 +116,10 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
   <nav class="mobile-nav">
     <a href="#services">Xidmətlər</a>
     <a href="#domain">Domen</a>
+    <a href="#email">E-poçt</a>
     <a href="#pricing">Qiymətlər</a>
     <a href="/templates">Şablonlar</a>
+    <a href="/xidmetler">Xüsusi xidmətlər</a>
     <a href="#faq">Suallar</a>
     <a href="#contact">Əlaqə</a>
   </nav>
@@ -134,7 +141,10 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
       <div class="hero-glow" data-hero-glow></div>
     </div>
 
+    <!-- Geniş ekranda (>=1100px) iki sütun: solda eyebrow + başlıq, sağda mətn + CTA + vurğular,
+         statistika isə altda tam en. Dar ekranlarda əvvəlki kimi alt-alta. -->
     <div class="container hero-inner">
+      <div class="hero-main">
       <p class="hero-eyebrow" data-hero="1"><span class="dot"></span> Veb-sayt + Domain + Özəl E-poçt — bir yerdə</p>
 
       <h1 class="hero-title">
@@ -143,7 +153,9 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
         <span class="line"><span class="word accent" data-hero="4">biznesinizi</span></span>
         <span class="line"><span class="word" data-hero="5">internetə</span> <span class="word" data-hero="6">daşıyın.</span></span>
       </h1>
+      </div>
 
+      <div class="hero-side">
       <p class="hero-sub" data-hero="7">
         Sizə uyğun unikal veb dizaynlar və yaddaqalan domain adları ilə rəqəmsal dünyada öz yerinizi alın —
         müasir vebsaytlar və ideal domainlərlə biznesiniz üçün rəqəmsal həllər təqdim edirik.
@@ -160,11 +172,12 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
         <li>Müasir kodlama standartları</li>
         <li>Təmiz interfeys</li>
       </ul>
+      </div>
 
       <!-- Sayğac animasiyalı statistika -->
       <div class="hero-stats led-border" data-hero="10">
         <div class="stat"><strong data-count="500" data-suffix="+">0</strong><span>Hazırlanmış Websayt</span></div>
-        <div class="stat"><strong>10 dəq</strong><span>ərzində cavab</span></div>
+        <div class="stat"><strong>1 dəq</strong><span>ərzində cavab</span></div>
         <div class="stat"><strong data-count="100" data-suffix="%">0</strong><span>müştəri məmnuniyyəti</span></div>
         <div class="stat"><strong>7/24</strong><span>Xüsusi Xidmət</span></div>
       </div>
@@ -266,6 +279,53 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
     </div>
   </section>
 
+  <!-- ================= KORPORATİV E-POÇT ================= -->
+  <!-- Sayt paketinə DAXİLDİR (əlavə xidmət deyil). Yalnız e-poçt istəyənlər üçün ayrıca: 1 il — 20 AZN.
+       "Sifariş et" linki wa.js-də data-wa mesajı ilə WhatsApp-a çevrilir. -->
+  <section class="section email" id="email">
+    <div class="container">
+      <header class="section-head reveal" data-dir="up">
+        <p class="kicker">E-poçt</p>
+        <h2>Korporativ e-poçt — brendinizin adı ilə</h2>
+        <p class="section-lead"><span class="email-sample">ad@brendiniz.az</span> kimi peşəkar ünvan müştərilərdə ilk gündən güvən yaradır. Quraşdırma və qoşulma tam bizim üzərimizdədir.</p>
+      </header>
+
+      <div class="email-layout">
+        <article class="email-features reveal" data-dir="up">
+          <ul class="email-list">
+            <li>
+              <strong>Öz domeninizdə ünvan</strong>
+              <span>info@, satis@, ad@ — istədiyiniz formada, brendinizin adı ilə.</span>
+            </li>
+            <li>
+              <strong>Hər cihazda işləyir</strong>
+              <span>Telefon, kompüter, Gmail, Outlook və iPhone Mail ilə tam uyğun.</span>
+            </li>
+            <li>
+              <strong>Spam və virus filtri</strong>
+              <span>Gələn məktublar avtomatik yoxlanılır, poçt qutunuz təmiz qalır.</span>
+            </li>
+            <li>
+              <strong>Quraşdırma bizdən</strong>
+              <span>Hesabın yaradılması, DNS ayarları və cihazlara qoşulma — hamısını biz edirik.</span>
+            </li>
+          </ul>
+        </article>
+
+        <article class="email-offer led-border reveal" data-dir="up">
+          <p class="email-offer-label">Yalnız e-poçt</p>
+          <div class="price-tag"><strong>20</strong><span>AZN / 1 il</span></div>
+          <p class="email-offer-text">Sayt sifariş etmədən, yalnız korporativ e-poçt almaq istəyənlər üçün.</p>
+          <a href="https://wa.me/994103136941" target="_blank" rel="noopener noreferrer" class="btn btn-solid btn-block" data-wa="Salam! Korporativ e-poçt (1 illik — 20 AZN) sifariş etmək istəyirəm.">E-poçt sifariş et</a>
+          <p class="email-included">
+            <span class="email-included-ic" aria-hidden="true">✓</span>
+            <span><strong>Sayt paketi alırsınız?</strong> Onda e-poçt əlavə xidmət deyil — paketin içində gəlir, ayrıca ödəniş tələb olunmur.</span>
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <!-- ================= HAQQIMIZDA ================= -->
   <section class="section about" id="about">
     <div class="container">
@@ -334,20 +394,21 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
       <header class="section-head reveal" data-dir="up">
         <p class="kicker">Qiymətlər</p>
         <h2>Bir paket — hər şey daxil</h2>
-        <p class="section-lead">Bütün paketlərə eyni xidmət daxildir — fərq yalnız müddətdədir. Uyğun paketi seçin, detalları WhatsApp-da danışaq.</p>
+        <p class="section-lead">Bütün paketlərə eyni xidmət daxildir — fərq yalnız müddətdədir. Paketi seçin, sifarişi birbaşa WhatsApp-da tamamlayaq.</p>
       </header>
 
       <div class="price-grid">
-        <!-- "Sifariş et" linkləri script.js-də yalnız paket adı ilə əvvəlcədən
-             doldurulmuş WhatsApp mesajına çevrilir (?text=...) — qiymət mesajda
-             GÖSTƏRİLMİR. Aşağıdakı href yalnız JS işləməsə fallback kimi qalır. -->
+        <!-- "Sifariş et" linkləri script.js-də paket adı + qiyməti (h3 + .price-tag-dan oxunur)
+             ilə əvvəlcədən doldurulmuş WhatsApp sifariş mesajına çevrilir (?text=...).
+             Aşağıdakı href yalnız JS işləməsə fallback kimi qalır. -->
         <article class="price-card reveal" data-dir="up">
           <h3>1 illik</h3>
+          <div class="price-tag"><strong>100</strong><span>AZN</span></div>
           <ul>
             <li>1 domen</li>
             <li>1 peşəkar veb-sayt</li>
             <li>1 peşəkar e-poçt</li>
-            <li>Limitsiz dəstək</li>
+            <li>DDoS hücumlarından müdafiə</li>
             <li>Xüsusi idarəetmə paneli</li>
           </ul>
           <a href="https://wa.me/994103136941" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-block" data-order>Sifariş et</a>
@@ -356,11 +417,12 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
         <article class="price-card is-featured led-border reveal" data-dir="up">
           <span class="badge">Ən Populyar</span>
           <h3>2 illik</h3>
+          <div class="price-tag"><strong>200</strong><span>AZN</span></div>
           <ul>
             <li>1 domen</li>
             <li>1 peşəkar veb-sayt</li>
             <li>1 peşəkar e-poçt</li>
-            <li>Limitsiz dəstək</li>
+            <li>DDoS hücumlarından müdafiə</li>
             <li>Xüsusi idarəetmə paneli</li>
           </ul>
           <a href="https://wa.me/994103136941" target="_blank" rel="noopener noreferrer" class="btn btn-solid btn-block" data-order>Sifariş et</a>
@@ -368,11 +430,12 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
 
         <article class="price-card reveal" data-dir="up">
           <h3>3 illik</h3>
+          <div class="price-tag"><strong>300</strong><span>AZN</span></div>
           <ul>
             <li>1 domen</li>
             <li>1 peşəkar veb-sayt</li>
             <li>1 peşəkar e-poçt</li>
-            <li>Limitsiz dəstək</li>
+            <li>DDoS hücumlarından müdafiə</li>
             <li>Xüsusi idarəetmə paneli</li>
           </ul>
           <a href="https://wa.me/994103136941" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-block" data-order>Sifariş et</a>
@@ -414,7 +477,7 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
           </div>
           <div class="faq-item">
             <button class="faq-q" id="faq-q-6" type="button" aria-expanded="false" aria-controls="faq-a-6">Ödəniş şərtləri necədir?<i></i></button>
-            <div class="faq-a" id="faq-a-6" role="region" aria-labelledby="faq-q-6"><div class="faq-a-in"><p>Ödəniş sayt hazır olduqdan sonra, domen qeydiyyatdan keçirilməzdən əvvəl alınır. Dəyəri sifarişdən əvvəl WhatsApp-da dəqiqləşdiririk.</p></div></div>
+            <div class="faq-a" id="faq-a-6" role="region" aria-labelledby="faq-q-6"><div class="faq-a-in"><p>Ödəniş sayt hazır olduqdan sonra, domen qeydiyyatdan keçirilməzdən əvvəl alınır. Paket qiymətləri: 1 illik — 100 AZN, 2 illik — 200 AZN, 3 illik — 300 AZN.</p></div></div>
           </div>
         </div>
       </div>
@@ -422,18 +485,29 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
   </section>
 
   <!-- ================= ƏLAQƏ ================= -->
+  <!-- Solda birbaşa əlaqə, sağda forma. Forma heç bir serverə göndərilmir:
+       wa.js mesajı yığıb WhatsApp-da hazır mətnlə açır (wa.me/?text=...). -->
   <section class="section contact" id="contact">
     <div class="container">
       <header class="section-head reveal" data-dir="up">
         <p class="kicker">Əlaqə</p>
-        <h2>Əlaqə saxlayın</h2>
-        <p class="section-lead">E-poçt və ya WhatsApp ilə birbaşa yaz — bir iş günü ərzində cavab veririk.</p>
+        <h2>Layihənizi danışaq</h2>
+        <p class="section-lead">Formu doldurun — mesajınız birbaşa WhatsApp-a hazır şəkildə düşür. 1 dəqiqə ərzində cavab veririk.</p>
       </header>
 
       <div class="contact-layout">
         <div class="contact-direct reveal" data-dir="up">
           <h3>Birbaşa əlaqə</h3>
           <ul>
+            <li>
+              <span class="contact-ic" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.14-.19.29-.74.93-.9 1.12-.17.19-.33.21-.62.07-.29-.15-1.22-.45-2.33-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.59.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.64-1.55-.88-2.13-.23-.55-.47-.48-.64-.49l-.55-.01c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38s1.02 2.76 1.17 2.95c.14.19 2.01 3.06 4.86 4.29.68.29 1.21.47 1.62.6.68.22 1.3.19 1.79.11.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34zM12.05 21.5h-.01a9.4 9.4 0 01-4.8-1.32l-.34-.2-3.57.93.96-3.48-.22-.36a9.42 9.42 0 01-1.44-5.02c0-5.2 4.24-9.44 9.46-9.44 2.53 0 4.9.99 6.69 2.78a9.38 9.38 0 012.77 6.67c0 5.2-4.24 9.44-9.46 9.44zM20.52 3.45A11.14 11.14 0 0012.05 0C5.5 0 .18 5.32.18 11.87c0 2.09.55 4.13 1.6 5.93L.08 24l6.34-1.66a11.9 11.9 0 005.62 1.43h.01c6.55 0 11.87-5.32 11.87-11.87 0-3.17-1.24-6.15-3.4-8.45z"/></svg>
+              </span>
+              <span class="contact-meta">
+                <span class="contact-label">WhatsApp</span>
+                <a href="https://wa.me/994103136941" target="_blank" rel="noopener noreferrer" data-wa="Salam! Sizinlə əlaqə saxlamaq istəyirəm.">+994 10 313 69 41</a>
+              </span>
+            </li>
             <li>
               <span class="contact-ic" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
@@ -445,19 +519,51 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
             </li>
             <li>
               <span class="contact-ic" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.14-.19.29-.74.93-.9 1.12-.17.19-.33.21-.62.07-.29-.15-1.22-.45-2.33-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.59.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.64-1.55-.88-2.13-.23-.55-.47-.48-.64-.49l-.55-.01c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38s1.02 2.76 1.17 2.95c.14.19 2.01 3.06 4.86 4.29.68.29 1.21.47 1.62.6.68.22 1.3.19 1.79.11.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34zM12.05 21.5h-.01a9.4 9.4 0 01-4.8-1.32l-.34-.2-3.57.93.96-3.48-.22-.36a9.42 9.42 0 01-1.44-5.02c0-5.2 4.24-9.44 9.46-9.44 2.53 0 4.9.99 6.69 2.78a9.38 9.38 0 012.77 6.67c0 5.2-4.24 9.44-9.46 9.44zM20.52 3.45A11.14 11.14 0 0012.05 0C5.5 0 .18 5.32.18 11.87c0 2.09.55 4.13 1.6 5.93L.08 24l6.34-1.66a11.9 11.9 0 005.62 1.43h.01c6.55 0 11.87-5.32 11.87-11.87 0-3.17-1.24-6.15-3.4-8.45z"/></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
               </span>
               <span class="contact-meta">
-                <span class="contact-label">WhatsApp</span>
-                <a href="https://wa.me/message/ESYKSCQ5XLNPK1" target="_blank" rel="noopener noreferrer">WhatsApp ilə yaz</a>
+                <span class="contact-label">Cavab müddəti</span>
+                <span class="contact-value">1 dəqiqə ərzində · 7/24</span>
               </span>
             </li>
           </ul>
         </div>
+
+        <form class="contact-form reveal" data-dir="up" id="contactForm" novalidate>
+          <div class="cf-row">
+            <label class="cf-field">
+              <span class="cf-label">Adınız</span>
+              <input class="cf-input" type="text" name="name" autocomplete="name" maxlength="60" required placeholder="Adınız və soyadınız" />
+            </label>
+            <label class="cf-field">
+              <span class="cf-label">Telefon <em>(istəyə bağlı)</em></span>
+              <input class="cf-input" type="tel" name="phone" autocomplete="tel" maxlength="20" placeholder="+994 __ ___ __ __" />
+            </label>
+          </div>
+          <label class="cf-field">
+            <span class="cf-label">Xidmət</span>
+            <select class="cf-input" name="service">
+              <option>Veb-sayt sifarişi</option>
+              <option>Domen</option>
+              <option>Korporativ e-poçt</option>
+              <option>Xüsusi xidmət (proqram, video və s.)</option>
+              <option>Digər</option>
+            </select>
+          </label>
+          <label class="cf-field">
+            <span class="cf-label">Mesajınız</span>
+            <textarea class="cf-input" name="message" rows="5" maxlength="1000" required placeholder="Layihəniz haqqında qısa yazın..."></textarea>
+          </label>
+          <p class="cf-error" id="contactError" role="alert" hidden></p>
+          <button class="btn btn-solid btn-lg cf-submit" type="submit">
+            WhatsApp-a göndər
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <p class="cf-note">Düyməyə basanda mesajınız WhatsApp-da hazır açılır — sadəcə "Göndər"ə toxunun.</p>
+        </form>
       </div>
     </div>
   </section>
-
 
 </main>
 
@@ -486,6 +592,17 @@ src="https://www.facebook.com/tr?id=4331233943803470&ev=PageView&noscript=1"
     </div>
   </div>
 </footer>
+
+<!-- ================= ÜZƏN WHATSAPP DÜYMƏSİ =================
+     Sağ altda dairəvi düymə — klikdə "sayt sifariş etmək istəyirəm" mesajı ilə WhatsApp açılır.
+     href tam hazırdır (JS olmadan da işləyir). -->
+<a class="wa-float" href="https://wa.me/994103136941?text=Salam!%20Sayt%20sifari%C5%9F%20etm%C9%99k%20ist%C9%99yir%C9%99m." target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ilə yazın — sayt sifariş et">
+  <span class="wa-float-tip" aria-hidden="true">Sayt sifariş et</span>
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.64.14-.19.29-.74.93-.9 1.12-.17.19-.33.21-.62.07-.29-.15-1.22-.45-2.33-1.43-.86-.77-1.44-1.72-1.61-2.01-.17-.29-.02-.45.13-.59.13-.13.29-.34.44-.51.15-.17.19-.29.29-.48.1-.19.05-.36-.02-.51-.07-.14-.64-1.55-.88-2.13-.23-.55-.47-.48-.64-.49l-.55-.01c-.19 0-.5.07-.76.36-.26.29-1 .98-1 2.38s1.02 2.76 1.17 2.95c.14.19 2.01 3.06 4.86 4.29.68.29 1.21.47 1.62.6.68.22 1.3.19 1.79.11.55-.08 1.7-.69 1.94-1.36.24-.67.24-1.24.17-1.36-.07-.12-.26-.19-.55-.34zM12.05 21.5h-.01a9.4 9.4 0 01-4.8-1.32l-.34-.2-3.57.93.96-3.48-.22-.36a9.42 9.42 0 01-1.44-5.02c0-5.2 4.24-9.44 9.46-9.44 2.53 0 4.9.99 6.69 2.78a9.38 9.38 0 012.77 6.67c0 5.2-4.24 9.44-9.46 9.44zM20.52 3.45A11.14 11.14 0 0012.05 0C5.5 0 .18 5.32.18 11.87c0 2.09.55 4.13 1.6 5.93L.08 24l6.34-1.66a11.9 11.9 0 005.62 1.43h.01c6.55 0 11.87-5.32 11.87-11.87 0-3.17-1.24-6.15-3.4-8.45z"/></svg>
+</a>
+
+<!-- WhatsApp: nömrə (tək mənbə), data-wa linkləri, əlaqə formu. script.js və domain-search.js-dən ƏVVƏL. -->
+<script src="wa.js" defer></script>
 
 <!-- Lenis smooth-scroll — inertial/yumşaq scroll (Framer saytlarındakı hiss).
      defer + script.js-dən əvvəl: hər ikisi sənəd sırası ilə icra olunur, Lenis hazır olur. -->
