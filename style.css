@@ -955,8 +955,8 @@ select.cf-input option { background: var(--bg-2); color: var(--text); }
 .wa-float {
   position: fixed;
   right: clamp(16px, 2.4vw, 28px);
-  /* cüzi yuxarı qaldırılıb — ekranın alt kənarına "yapışmasın" (əvvəl 16–28px) */
-  bottom: clamp(32px, 4.5vw, 56px);
+  /* yuxarı qaldırılıb — ekranın alt kənarına "yapışmasın" (əvvəl 16–28px, sonra 32–56px) */
+  bottom: clamp(56px, 7vw, 88px);
   z-index: 150;
   display: flex; align-items: center; justify-content: center;
   width: 60px; height: 60px;
