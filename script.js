@@ -246,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
     root.addEventListener('mouseenter', () => root.classList.remove('cursor-hidden'), { passive: true });
     window.addEventListener('blur', () => root.classList.add('cursor-hidden'));
 
-    return { dot, ring, rx: pointer.x, ry: pointer.y };
+    return { dot, ring, rx: pointer.x, ry: pointer.y, px: NaN, py: NaN };
   })() : null;
 
   /* ===================================================================
@@ -296,11 +296,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- xüsusi cursor: dot dəqiq maus mövqeyində, halqa yüngül gecikmə ilə ---
+    // Yalnız maus hərəkət edəndə və ya halqa hələ çatmayanda DOM-a yazılır —
+    // əvvəl HƏR kadrda (boş vaxtda da) 2 elementin style-ı yazılırdı → daimi style recalc.
     if (cursor) {
-      cursor.dot.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0)`;
-      cursor.rx = lerp(cursor.rx, pointer.x, 0.2);
-      cursor.ry = lerp(cursor.ry, pointer.y, 0.2);
-      cursor.ring.style.transform = `translate3d(${cursor.rx.toFixed(2)}px, ${cursor.ry.toFixed(2)}px, 0)`;
+      const dx = pointer.x - cursor.rx, dy = pointer.y - cursor.ry;
+      if (pointer.x !== cursor.px || pointer.y !== cursor.py) {
+        cursor.dot.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0)`;
+        cursor.px = pointer.x; cursor.py = pointer.y;
+      }
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        cursor.rx += dx * 0.2;
+        cursor.ry += dy * 0.2;
+        cursor.ring.style.transform = `translate3d(${cursor.rx.toFixed(2)}px, ${cursor.ry.toFixed(2)}px, 0)`;
+      }
     }
 
     // --- scroll-driven (yalnız dəyişəndə) ---
@@ -358,7 +366,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const revealIO = new IntersectionObserver((entries) => {
     for (const entry of entries) {
       const el = entry.target;
-      el.style.willChange = 'transform, opacity, filter';
+      el.style.willChange = 'transform, opacity';
       if (entry.isIntersecting) {
         el.style.transitionDelay = (+el.dataset.revealI * 55) + 'ms';   // qısa stagger (giriş)
         el.setAttribute('data-visible', '');
@@ -463,7 +471,15 @@ document.addEventListener('DOMContentLoaded', () => {
   // window.__saytlabPlayHeroReveal-i reveal() içində çağırır. Preloader yoxdursa (terms/privacy,
   // və ya artıq silinibsə) — köhnə davranış: dərhal başlat.
   if (document.getElementById('preloader')) {
-    window.__saytlabPlayHeroReveal = playHeroReveal;
+    /* Preloader oynayarkən arxadakı səhifə scroll olunmasın: əvvəl istifadəçi bu ~1.3s
+       ərzində təkər/barmaqla sürüşdürəndə səhifə görünməz halda aşağı gedir, preloader
+       sönəndə ortadan açılır, header gizli qalır və hero animasiyası "itirdi" — "bug"
+       hissi bunun idi. Kilid hero açılan an götürülür. */
+    if (lenis) lenis.stop();
+    window.__saytlabPlayHeroReveal = () => {
+      if (lenis) lenis.start();
+      playHeroReveal();
+    };
   } else {
     playHeroReveal();
   }

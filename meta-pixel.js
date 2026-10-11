@@ -26,19 +26,29 @@
     s.parentNode.insertBefore(t, s);
   }
 
+  /* DONMA DÜZƏLİŞİ (2026-10): əvvəl kitabxana `load`-dan dərhal sonra (idle, ~0.7–1s)
+     yüklənirdi — bu, məhz preloader-in "şüşə qırılması" və hero giriş animasiyasının
+     oynadığı ana düşürdü. fbevents.js-in parse/exec-i uzun bloklayıcı tapşırıqdır və
+     animasiyanı bir anlıq dondururdu. İndi: load + 3.5s gözlə, sonra boş vaxtda yüklə.
+     İlk toxunuş/klikdə də artıq yüklənmir (o an yüklənsə həmin klik "donmuş" hiss
+     olunurdu). Hadisələr itmir: fbq() növbəsi saxlanılır, istifadəçi səhifəni tərk
+     edəndə (gizlənəndə) isə dərhal yüklənir. */
+  var START_DELAY = 3500;
   function schedule() {
-    if (f.requestIdleCallback) f.requestIdleCallback(inject, { timeout: 2500 });
-    else setTimeout(inject, 1200);
+    setTimeout(function () {
+      if (f.requestIdleCallback) f.requestIdleCallback(inject, { timeout: 2000 });
+      else inject();
+    }, START_DELAY);
   }
 
   if (b.readyState === 'complete') schedule();
   else f.addEventListener('load', schedule, { once: true });
 
-  /* İstifadəçi tez qarşılıqlı əlaqəyə girsə (və ya tabı dəyişsə) gözləmə —
-     pixel dərhal qalxsın ki, hadisə itməsin. */
-  ['pointerdown', 'keydown', 'touchstart', 'visibilitychange'].forEach(function (ev) {
-    f.addEventListener(ev, inject, { once: true, passive: true });
+  /* Tab gizlənəndə / səhifə tərk ediləndə gözləmə — PageView itməsin. */
+  b.addEventListener('visibilitychange', function () {
+    if (b.visibilityState === 'hidden') inject();
   });
+  f.addEventListener('pagehide', inject, { once: true });
 }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
 
 fbq('init', '4331233943803470');

@@ -8,19 +8,12 @@
 /* ---------- 1. Dəyişənlər (CSS custom properties) ---------- */
 :root {
   /* Rəng sistemi */
-  /* Yaşıl palitra (2026-10, üçüncü yeniləmə): əsas fon #023002 götürüldü, digər
-     səthlər ondan bir pillə açıq tonlarla qurulur. Tarixçə:
-     --bg        #0a1712 → #0f2219 → #004200 → #023002
-     --bg-2      #0d1e17 → #13281e → #054b09 → #063808
-     --surface   #12261d → #183126 → #0b5512 → #0b420e
-     --surface-2 #17301f → #1e3b2c → #13601b → #124d16
-     Loqonun fonu da uyğunlaşdırıldı: → #0b420e (logo-saytlab-round.png). */
-  --bg:            #023002;   /* əsas fon — zümrüd yaşılı */
-  --bg-2:          #063808;
-  --surface:       #0b420e;   /* kart fonu */
-  --surface-2:     #124d16;   /* qalxmış səth */
-  --bg-rgb:        2, 48, 2;   /* --bg-in RGB forması — şəffaf header/overlay fonları üçün */
-  --surface-rgb:   11, 66, 14; /* --surface-in RGB forması — şüşə menyu zolağı üçün */
+  --bg:            #0a1712;   /* əsas fon — dərin zümrüd-qara (ilkin palitra, loqonun fonu ilə uyğun) */
+  --bg-2:          #0d1e17;
+  --surface:       #12261d;   /* kart fonu */
+  --surface-2:     #17301f;   /* qalxmış səth */
+  --bg-rgb:        10, 23, 18; /* --bg-in RGB forması — şəffaf header/overlay fonları üçün */
+  --surface-rgb:   18, 38, 29; /* --surface-in RGB forması — şüşə menyu zolağı üçün */
   --border:        rgba(233, 190, 122, 0.14);
   --border-strong: rgba(233, 190, 122, 0.30);
 
@@ -182,10 +175,13 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
   -webkit-mask-composite: source-out;   /* köhnə WebKit/Safari */
   -webkit-mask-composite: xor;          /* WebKit */
           mask-composite: exclude;      /* standart */
-  filter: drop-shadow(0 0 5px var(--glow));
+  /* filter: drop-shadow SİLİNDİ — animasiya olunan qatda filter hər kadrda yenidən
+     rasterləşdirilirdi (3 element × hər kadr). Ekrandan kənarda isə animasiya dayanır
+     (data-pause-offscreen → --anim-state, bax script.js §0). */
   pointer-events: none;
   z-index: 1;
   animation: led-border-spin 4s linear infinite;
+  animation-play-state: var(--anim-state, running);
 }
 
 @keyframes led-border-spin {
@@ -294,9 +290,9 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
   padding: 5px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(var(--surface-rgb), 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  /* backdrop-filter YOX: header özü scroll-da blur edir; iç-içə ikinci blur hər scroll
+     kadrında ikiqat hesablanırdı (xüsusilə Safari/zəif GPU-da donma). Fon daha qatıdır. */
+  background: rgba(var(--surface-rgb), 0.82);
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 .main-nav a {
@@ -500,15 +496,17 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 /* İstiqamətli sürüşmə + yüngül skala + yumşaq blur ("fokuslanma" hissi).
    Blur mobil-də söndürülür (aşağıda 768px media) — mobil GPU-larda bahalıdır.
    will-change JS-də yalnız açılış anında qoyulur (bax script.js reveal()). */
+/* filter: blur SİLİNDİ (performans): eyni anda bir neçə kart açılanda hər biri üçün
+   blur hər kadrda yenidən hesablanırdı — scroll zamanı "ilişmə"nin əsas səbəblərindən idi.
+   Hərəkət yalnız transform + opacity ilə (tam GPU-da) qalır. */
 .reveal {
-  transition: transform 700ms var(--ease-reveal), opacity 600ms var(--ease-reveal), filter 600ms var(--ease-reveal);
-  filter: blur(0px);
+  transition: transform 700ms var(--ease-reveal), opacity 600ms var(--ease-reveal);
 }
-.js-reveal .reveal { transform: translateY(44px) scale(0.985); opacity: 0; filter: blur(2px); }
+.js-reveal .reveal { transform: translateY(44px) scale(0.985); opacity: 0; }
 .js-reveal .reveal[data-dir="down"]  { transform: translateY(-38px) scale(0.985); }
 .js-reveal .reveal[data-dir="left"]  { transform: translateX(52px) scale(0.985); }
 .js-reveal .reveal[data-dir="right"] { transform: translateX(-52px) scale(0.985); }
-.js-reveal .reveal[data-visible] { transform: none; opacity: 1; filter: blur(0px); }
+.js-reveal .reveal[data-visible] { transform: none; opacity: 1; }
 
 /* will-change yalnız daimi transform alan elementlərə: parallax qatı və magnit düymələr
    (hər ikisi yalnız hero + CTA banner-də). */
@@ -965,17 +963,27 @@ select.cf-input option { background: var(--bg-2); color: var(--text); }
   border-radius: 50%;
   background: #25d366;
   color: #fff;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(37, 211, 102, 0.5);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   transition: transform 0.25s var(--ease), opacity 0.3s var(--ease), visibility 0.3s var(--ease);
+}
+/* "Nəbz" halqası — əvvəl box-shadow animasiya olunurdu (hər kadrda repaint, sabit
+   elementdə scroll-u ağırlaşdırırdı). İndi ayrıca qat yalnız transform + opacity ilə. */
+.wa-float::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: #25d366;
+  z-index: -1;
   animation: waPulse 2.6s ease-out infinite;
+  pointer-events: none;
 }
 .wa-float svg { width: 30px; height: 30px; }
 .wa-float:hover { transform: translateY(-3px) scale(1.04); }
 .wa-float:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 @keyframes waPulse {
-  0%   { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(37, 211, 102, 0.45); }
-  70%  { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 16px rgba(37, 211, 102, 0); }
-  100% { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 0 0 rgba(37, 211, 102, 0); }
+  0%   { transform: scale(1);    opacity: 0.45; }
+  70%  { transform: scale(1.55); opacity: 0; }
+  100% { transform: scale(1.55); opacity: 0; }
 }
 .wa-float-tip {
   position: absolute;
@@ -1097,10 +1105,8 @@ select.cf-input option { background: var(--bg-2); color: var(--text); }
   .footer-brand .logo { justify-content: center; }
   .footer-brand p { margin-inline: auto; }
 
-  /* mobil GPU-larda blur bahalıdır — reveal-də filter söndürülür, yalnız translate+opacity qalır */
+  /* mobil-də bir az qısa keçid */
   .reveal { transition: transform 640ms var(--ease-reveal), opacity 560ms var(--ease-reveal); }
-  .js-reveal .reveal,
-  .js-reveal .reveal[data-visible] { filter: none; }
 }
 
 @media (max-width: 420px) {
@@ -1117,16 +1123,17 @@ select.cf-input option { background: var(--bg-2); color: var(--text); }
 /* ---------- 22b. Səhifə keçidi — sürətli fade + slight-slide ---------- */
 /* Yalnız JS aktiv olduqda (js-reveal <html>-ə əlavə olunur). JS olmadan səhifə
    normal görünür — heç nə gizlənmir. index.html, privacy.html, terms.html. */
+/* Yalnız opacity — body-yə transform VERİLMİR: transform olan body position:fixed
+   elementlər (WhatsApp düyməsi, proqres zolağı, cursor) üçün yeni "konteyner" olur və
+   onlar fade bitənə qədər səhifənin dibinə düşüb, sonra yerinə "sıçrayırdı". */
 .js-reveal body {
   opacity: 0;
-  transform: translateY(8px);
-  transition: opacity .25s var(--ease-reveal), transform .25s var(--ease-reveal);
+  transition: opacity .25s var(--ease-reveal);
 }
-.js-reveal body.page-ready { opacity: 1; transform: none; }
+.js-reveal body.page-ready { opacity: 1; }
 .js-reveal body.is-leaving {
   opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity .18s var(--ease-reveal), transform .18s var(--ease-reveal);
+  transition: opacity .18s var(--ease-reveal);
 }
 
 /* ---------- 22d. Preloader — giriş animasiyası (logo + "şüşə qırılması") ----------
@@ -1256,7 +1263,7 @@ html.cursor-custom, html.cursor-custom * { cursor: none !important; }
     opacity: 1 !important;
   }
   /* bütün sonsuz / dekorativ hərəkət dayandırılır */
-  .blob, .marquee-track, .wa-float, .pulse-grid i,
+  .blob, .marquee-track, .wa-float::before, .pulse-grid i,
   [class*="spin"], [class*="pulse"], [class*="breathe"] { animation: none !important; }
   [data-hero] { opacity: 1 !important; transform: none !important; }
   /* header həmişə görünən qalır, mouse-glow heç görünmür */
