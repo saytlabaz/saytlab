@@ -5,7 +5,7 @@
       domain-search.js window.SAYTLAB_WA_NUMBER-dən oxuyur, nömrə başqa yerdə
       kodda təkrar yazılmır (HTML-dəki href-lər yalnız JS-siz fallback-dır).
    2) [data-wa="mesaj"] linkləri — href əvvəlcədən doldurulmuş WhatsApp
-      mesajına çevrilir (e-poçt sifarişi, xüsusi xidmətlər və s.).
+      mesajına çevrilir (e-poçt sifarişi və s.).
    3) Əlaqə formu (#contactForm) — heç bir serverə göndərilmir: sahələr
       yığılıb WhatsApp-da hazır mətn kimi açılır.
    CSP: inline script yoxdur — bu fayl <script defer> ilə qoşulur.

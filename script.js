@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
           sonra yönləndir — belə ki keçid hər iki tərəfdən hamar görünsün.
           (o səhifələr legal.js ilə fade-in edir.)
      =================================================================== */
-  $$('a[href="/terms"], a[href="/privacy"], a[href="/templates"], a[href="/xidmetler"]').forEach(link => {
+  $$('a[href="/terms"], a[href="/privacy"], a[href="/templates"]').forEach(link => {
     link.addEventListener('click', (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0 || link.target === '_blank') return;
       e.preventDefault();

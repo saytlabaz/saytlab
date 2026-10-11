@@ -1052,49 +1052,6 @@ select.cf-input option { background: var(--bg-2); color: var(--text); }
   .wa-float svg { width: 27px; height: 27px; }
 }
 
-/* ---------- 21i. Xüsusi xidmətlər səhifəsi (xidmetler.html) ---------- */
-.svc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
-/* 5 kart: geniş ekranda 3 + 2 balanslı düzülüş (6 sütunlu grid — üst sıra 2-şər, alt sıra 3-ər sütun) */
-@media (min-width: 1000px) {
-  .svc-grid { grid-template-columns: repeat(6, 1fr); }
-  .svc-grid > .svc-card { grid-column: span 2; }
-  .svc-grid > .svc-card:nth-child(n+4) { grid-column: span 3; }
-}
-.svc-card {
-  display: flex; flex-direction: column;
-  padding: 26px;
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  background: var(--surface);
-  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
-}
-.svc-card:hover { transform: translateY(-4px); border-color: var(--border-strong); }
-.svc-card.is-main { border-color: var(--accent); background: linear-gradient(180deg, var(--surface-2), var(--surface)); }
-.svc-ic {
-  display: inline-flex; align-items: center; justify-content: center;
-  width: 46px; height: 46px; margin-bottom: 18px;
-  border: 1px solid var(--border-strong);
-  border-radius: 14px;
-  background: rgba(230, 184, 102, 0.1);
-  color: var(--accent);
-}
-.svc-ic svg { width: 22px; height: 22px; }
-.svc-card h2, .svc-card h3 { font-size: 1.14rem; margin-bottom: 8px; }
-.svc-card p { color: var(--text-muted); font-size: 0.93rem; margin-bottom: 18px; }
-.svc-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
-.svc-tags li { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; font-size: 0.76rem; color: var(--text-dim); }
-.svc-card .btn { margin-top: auto; align-self: flex-start; }
-.svc-cta {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 28px;
-  margin-top: clamp(36px, 5vw, 56px);
-  padding: clamp(24px, 3.4vw, 36px);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  background: var(--surface);
-}
-.svc-cta h2 { font-size: clamp(1.3rem, 2.6vw, 1.7rem); margin-bottom: 6px; }
-.svc-cta p { color: var(--text-muted); }
-
 /* ---------- 21h. Hüquqi səhifələr — Qaydalar / Məxfilik (terms.html, privacy.html) ---------- */
 .legal-body { max-width: 760px; }
 .legal-body p { color: var(--text-muted); font-size: 0.96rem; margin-bottom: 16px; }
